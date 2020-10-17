@@ -1,0 +1,21 @@
+.navbar {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #333;
+}
+
+.navbar .navbar__auth {
+    color: white;
+    margin-right: 40px;
+}
+
+.navbar .navbar__home {
+    color: white;
+    margin-left: 50px;
+    margin-right: auto;
+}
+
