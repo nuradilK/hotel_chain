@@ -5,10 +5,11 @@ import {authenticationService} from "../../services/auth.service";
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => {
-        const currentUser = authenticationService.currentUserValue;
-        if (!currentUser) {
+        // const currentUser = authenticationService.currentUserValue;
+        if (!localStorage.getItem("currentUser")) {
             return <Redirect to='/login' />
+        } else {
+            return <Component {...props} />
         }
-        return <Component {...props} />
     }} />
 )

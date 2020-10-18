@@ -1,16 +1,21 @@
 import axios from 'axios';
 import { BehaviorSubject } from 'rxjs';
-import { handleResponse } from "../_helpers/handle-response";
 
-const API_URL = "http://localhost:3000/api/auth/";
+const API_URL = "http://localhost:8080/api/auth/";
 
 
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
+const getUsers = (email, password) => {
+    return axios.get(API_URL + "users")
+        .then(response => {
+            console.log(response);
+        });
+};
 
-const register = (username, email, password) => {
+
+const register = (email, password) => {
     return axios.post(API_URL + "signup", {
-        username,
         email,
         password,
     })
@@ -24,10 +29,10 @@ const register = (username, email, password) => {
         });
 };
 
-const login = (username, password) => {
+const login = (email, password) => {
     return axios
         .post(API_URL + "signin", {
-            username,
+            email,
             password,
         })
         .then(response => {
@@ -35,7 +40,6 @@ const login = (username, password) => {
                 localStorage.setItem("currentUser", JSON.stringify(response.data));
                 currentUserSubject.next(response.data);
             }
-
             return response.data;
         });
 };
@@ -48,6 +52,7 @@ const logout = () => {
 
 
 export const authenticationService = {
+    getUsers,
     login,
     logout,
     register,

@@ -4,15 +4,20 @@ import './profile.css'
 
 export const Profile = () => {
 
-    const [currentUser, setCurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("currentUser")));
 
-    useEffect(() => {
-        authenticationService.currentUser.subscribe(x => setCurrentUser(x));
-    })
+    // useEffect(() => {
+    //     authenticationService.currentUser.subscribe(x => setCurrentUser(x));
+    // })
+
+    console.log(currentUser)
 
     return (
         <div>
-            {currentUser}
+            <h1>Your profile info (You are logged in)</h1>
+            <h2>id: {currentUser.id}</h2>
+            <h2>email: {currentUser.email}</h2>
+            <h2>accessToken: {currentUser.accessToken}</h2>
         </div>
     )
 }

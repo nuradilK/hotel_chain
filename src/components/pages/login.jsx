@@ -45,7 +45,7 @@ export const Login = () => {
     const validate = () => {
         let newErrors = {...validateErrors}
         newErrors.emailError = (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(email) ? '' : 'Invalid email'
-        newErrors.password = password.length >= 6 ? '': 'Minimum 6 symbols required'
+        newErrors.passwordError = password.length >= 6 ? '' : 'Minimum 6 symbols required'
 
         setValidateErrors(newErrors);
 
@@ -76,7 +76,7 @@ export const Login = () => {
     }
 
     return (
-        <form className='form-container'>
+        <form className='form-container' onSubmit={submit}>
             <div className='form-container__name'>Login</div>
             <TextField
                 className='form-container__input'
@@ -108,7 +108,7 @@ export const Login = () => {
                         </IconButton>
                     }}
             />
-            <Button className='form-container__btn' variant="contained">LOGIN</Button>
+            <Button className='form-container__btn' variant="contained" type='submit'>LOGIN</Button>
         </form>
     )
 }
