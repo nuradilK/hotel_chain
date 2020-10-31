@@ -19,12 +19,35 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "password")
     private String password;
 
-    public User(String firstName, String lastName, String email, String password) {
+    public User(String firstName, String lastName, String email, String password, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public User(String username, String password, String email) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+    }
+
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
