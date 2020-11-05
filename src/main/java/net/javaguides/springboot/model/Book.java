@@ -3,6 +3,8 @@ package net.javaguides.springboot.model;
 import javax.persistence.*;
 import java.util.ArrayList;
 
+@Entity
+@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,18 +13,16 @@ public class Book {
     @Column(name = "hotelId")
     private int hotelId;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "hotel id", referencedColumnName = "hotelId")
-    private ArrayList<RoomType> roomTypes;
+    @Column(name = "roomType")
+    private String roomType;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rooms number", referencedColumnName = "roomId")
-    private ArrayList<Room> rooms;
+    @Column(name = "room")
+    private int room;
 
-    public Book(int hotelId, ArrayList<RoomType> roomTypes, ArrayList<Room> rooms) {
+    public Book(int hotelId, String roomType, int room) {
         this.hotelId = hotelId;
-        this.roomTypes = roomTypes;
-        this.rooms = rooms;
+        this.roomType = roomType;
+        this.room = room;
     }
 
     public void setHotelId(int hotelId) {
@@ -37,24 +37,27 @@ public class Book {
         return id;
     }
 
-    public void setRoomTypes(ArrayList<RoomType> roomTypes) {
-        this.roomTypes = roomTypes;
-    }
-
-    public void setRooms(ArrayList<Room> rooms) {
-        this.rooms = rooms;
-    }
-
     public int getHotelId() {
         return hotelId;
     }
 
-    public ArrayList<RoomType> getRoomTypes() {
-        return roomTypes;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public ArrayList<Room> getRooms() {
-        return rooms;
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
+    public void setRoom(int room) {
+        this.room = room;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public int getRoom() {
+        return room;
+    }
 }

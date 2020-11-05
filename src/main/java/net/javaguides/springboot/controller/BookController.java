@@ -17,7 +17,7 @@ public class BookController {
 
     @PostMapping("/book")
     public ResponseEntity<?> book(@Valid @RequestBody BookRequest bookRequest){
-        Book book = new Book(bookRequest.getHotelId(), bookRequest.getRoomTypes(), bookRequest.getRooms());
+        Book book = new Book(bookRequest.getHotelId(), bookRequest.getRoomType(), bookRequest.getRoom());
         bookRepository.save(book);
 
         return ResponseEntity.ok().body("You have booked!");

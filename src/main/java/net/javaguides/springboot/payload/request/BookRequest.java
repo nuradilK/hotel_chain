@@ -7,30 +7,31 @@ import java.util.ArrayList;
 
 public class BookRequest {
     private int hotelId;
-    private ArrayList<RoomType> roomTypes;
-    private ArrayList<Room> rooms;
+    private String roomType;
+    private int room;
+
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public int getRoom() {
+        return room;
+    }
 
     public int getHotelId(){
         return this.hotelId;
     }
 
-    public ArrayList<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(ArrayList<Room> rooms) {
-        this.rooms = rooms;
-    }
-
-    public ArrayList<RoomType> getRoomTypes() {
-        return roomTypes;
-    }
-
     public void setHotelId(int hotelId) {
         this.hotelId = hotelId;
-    }
-
-    public void setRoomTypes(ArrayList<RoomType> roomTypes) {
-        this.roomTypes = roomTypes;
     }
 }

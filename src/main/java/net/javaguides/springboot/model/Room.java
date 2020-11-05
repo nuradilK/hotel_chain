@@ -28,6 +28,10 @@ public class Room {
 	
 	@Temporal(TemporalType.DATE)
 	private Date reservationOutDate;
+
+	@ManyToOne
+	@JoinColumn(name="roomType_id", nullable=false)
+	private RoomType roomType;
 	
 	public Room() {}
 	

@@ -43,9 +43,12 @@ public class RoomType {
 	@Column(name = "price_Sn")
 	private String price_Sn;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "roomTypeID", referencedColumnName = "roomType_id")
+	@OneToMany(mappedBy = "roomType")
 	List<Room> rooms = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name="hotel_id", nullable=false)
+	private Hotel hotel;
 	
 	public RoomType() {}
 	

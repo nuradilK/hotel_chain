@@ -19,10 +19,9 @@ public class Hotel {
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "hotel id", referencedColumnName = "hotelId")
-	List<RoomType> roomtypes = new ArrayList<>();
-	
+	@OneToMany(mappedBy = "hotel")
+	private List<RoomType> roomTypes = new ArrayList<>();
+
 	public Hotel() {}
 	
 	public Hotel(String address, String name) {
@@ -48,10 +47,10 @@ public class Hotel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<RoomType> getRoomtypes() {
-		return roomtypes;
+	public List<RoomType> getRoomTypes() {
+		return roomTypes;
 	}
-	public void setRoomtypes(List<RoomType> roomtypes) {
-		this.roomtypes = roomtypes;
+	public void setRoomTypes(List<RoomType> roomtypes) {
+		this.roomTypes = roomtypes;
 	}
 }
