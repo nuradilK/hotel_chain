@@ -11,7 +11,7 @@ public class Hotel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long hotel_id;
+	private long hotelId;
 	
 	@Column(name = "address")
 	private String address;
@@ -20,7 +20,7 @@ public class Hotel {
 	private String name;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "hotelID", referencedColumnName = "hotel_id")
+	@JoinColumn(name = "hotel id", referencedColumnName = "hotelId")
 	List<RoomType> roomtypes = new ArrayList<>();
 	
 	public Hotel() {}
@@ -30,11 +30,11 @@ public class Hotel {
 		this.address = address;
 		this.name = name;
 	}
-	public long getHotel_id() {
-		return hotel_id;
+	public long getHotelId() {
+		return hotelId;
 	}
-	public void setHotel_id(long hotel_id) {
-		this.hotel_id = hotel_id;
+	public void setHotelId(long hotel_id) {
+		this.hotelId = hotel_id;
 	}
 	public String getAddress() {
 		return address;
@@ -51,7 +51,6 @@ public class Hotel {
 	public List<RoomType> getRoomtypes() {
 		return roomtypes;
 	}
-
 	public void setRoomtypes(List<RoomType> roomtypes) {
 		this.roomtypes = roomtypes;
 	}

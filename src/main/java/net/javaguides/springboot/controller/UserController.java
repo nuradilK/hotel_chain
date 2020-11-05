@@ -24,7 +24,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/auth/")
 public class UserController {
-
     @Autowired
     private UserRepository userRepository;
 
@@ -60,7 +59,6 @@ public class UserController {
                 newUser.getEmail(),
                 jwt
         ));
-
     }
 
     @PostMapping("/signin")

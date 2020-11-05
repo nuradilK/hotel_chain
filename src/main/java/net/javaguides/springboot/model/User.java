@@ -1,5 +1,7 @@
 package net.javaguides.springboot.model;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -42,12 +44,24 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn( name = "room_id_number", referencedColumnName = "room_id")
+    private List<Room> rooms = new ArrayList<Room>();
+
     public User() {
     }
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 
     public Long getId() {
