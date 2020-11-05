@@ -1,14 +1,13 @@
 package net.javaguides.springboot.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 
 @Entity
 @Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "hotelId")
     private int hotelId;
@@ -19,11 +18,20 @@ public class Book {
     @Column(name = "room")
     private int room;
 
+    public Book(Long id, int hotelId, String roomType, int room) {
+        this.id = id;
+        this.hotelId = hotelId;
+        this.roomType = roomType;
+        this.room = room;
+    }
+
     public Book(int hotelId, String roomType, int room) {
         this.hotelId = hotelId;
         this.roomType = roomType;
         this.room = room;
     }
+
+    public Book() {}
 
     public void setHotelId(int hotelId) {
         this.hotelId = hotelId;

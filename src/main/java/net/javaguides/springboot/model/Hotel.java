@@ -8,22 +8,29 @@ import javax.persistence.*;
 @Entity
 @Table(name = "hotels")
 public class Hotel {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long hotelId;
-	
+
 	@Column(name = "address")
 	private String address;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@OneToMany(mappedBy = "hotel")
 	private List<RoomType> roomTypes = new ArrayList<>();
 
 	public Hotel() {}
-	
+
+	public Hotel(long hotelId, String address, String name, List<RoomType> roomTypes) {
+		this.hotelId = hotelId;
+		this.address = address;
+		this.name = name;
+		this.roomTypes = roomTypes;
+	}
+
 	public Hotel(String address, String name) {
 		super();
 		this.address = address;

@@ -8,14 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@RestController
+@RequestMapping("/api/book")
 public class BookController {
+
     @Autowired
     private BookRepository bookRepository;
 
-    @PostMapping("/book")
+    @PostMapping("/room")
     public ResponseEntity<?> book(@Valid @RequestBody BookRequest bookRequest){
         Book book = new Book(bookRequest.getHotelId(), bookRequest.getRoomType(), bookRequest.getRoom());
         bookRepository.save(book);

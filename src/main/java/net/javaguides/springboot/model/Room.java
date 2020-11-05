@@ -6,37 +6,37 @@ import javax.persistence.*;
 @Entity
 @Table(name = "rooms")
 public class Room {
-	
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long room_id;
-	
+
 	@Column(name = "cleaned")
 	private boolean cleaned = true;
-	
+
 	@Column(name = "guested")
 	private boolean guested = false;
-	
+
 	@Column(name = "number")
 	private int number;
-	
+
 	@Column(name = "floor")
 	private int floor;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date reservationInDate;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date reservationOutDate;
 
 	@ManyToOne
 	@JoinColumn(name="roomType_id", nullable=false)
 	private RoomType roomType;
-	
+
 	public Room() {}
-	
+
 	public Room(boolean cleaned, boolean guested, int number, int floor, Date reservationInDate,
-			Date reservationOutDate) {
+				Date reservationOutDate) {
 		super();
 		this.cleaned = cleaned;
 		this.guested = guested;
@@ -87,5 +87,5 @@ public class Room {
 	public void setReservationOutDate(Date reservationOutDate) {
 		this.reservationOutDate = reservationOutDate;
 	}
-	
+
 }

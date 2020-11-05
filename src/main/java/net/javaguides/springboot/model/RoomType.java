@@ -6,54 +6,54 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roomtypes")
+@Table(name = "roomTypes")
 public class RoomType {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long roomType_id;
-	
+
 	@Column(name = "type")
 	private String type;
-	
+
 	@Column(name = "capacity")
 	private int capacity;
-	
+
 	@Column(name = "size")
 	private long size;
-	
+
 	@Column(name = "price_M")
 	private String price_M;
-	
+
 	@Column(name = "price_T")
 	private String price_T;
-	
+
 	@Column(name = "price_W")
 	private String price_W;
-	
+
 	@Column(name = "price_R")
 	private String price_R;
-	
+
 	@Column(name = "price_F")
 	private String price_F;
-	
+
 	@Column(name = "price_St")
 	private String price_St;
-	
+
 	@Column(name = "price_Sn")
 	private String price_Sn;
-	
+
 	@OneToMany(mappedBy = "roomType")
-	List<Room> rooms = new ArrayList<>();
+	private List<Room> rooms = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name="hotel_id", nullable=false)
 	private Hotel hotel;
-	
+
 	public RoomType() {}
-	
+
 	public RoomType(String type, int capacity, long size, String price_M, String price_T, String price_W,
-			String price_R, String price_F, String price_St, String price_Sn) {
+					String price_R, String price_F, String price_St, String price_Sn) {
 		super();
 		this.type = type;
 		this.capacity = capacity;
