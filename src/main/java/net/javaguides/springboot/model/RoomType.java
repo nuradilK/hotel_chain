@@ -16,31 +16,31 @@ public class RoomType {
 	@Column(name = "type")
 	private String type;
 
-	@Column(name = "capacity")
+	@Column(name = "capacity", nullable = true)
 	private int capacity;
 
-	@Column(name = "size")
+	@Column(name = "size", nullable = true)
 	private long size;
 
-	@Column(name = "price_M")
+	@Column(name = "price_M", nullable = true)
 	private String price_M;
 
-	@Column(name = "price_T")
+	@Column(name = "price_T", nullable = true)
 	private String price_T;
 
-	@Column(name = "price_W")
+	@Column(name = "price_W", nullable = true)
 	private String price_W;
 
-	@Column(name = "price_R")
+	@Column(name = "price_R", nullable = true)
 	private String price_R;
 
-	@Column(name = "price_F")
+	@Column(name = "price_F", nullable = true)
 	private String price_F;
 
-	@Column(name = "price_St")
+	@Column(name = "price_St", nullable = true)
 	private String price_St;
 
-	@Column(name = "price_Sn")
+	@Column(name = "price_Sn", nullable = true)
 	private String price_Sn;
 
 	@OneToMany(mappedBy = "roomType")

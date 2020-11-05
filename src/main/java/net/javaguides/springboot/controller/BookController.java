@@ -22,7 +22,7 @@ public class BookController {
 
     @PostMapping("/room")
     public ResponseEntity<?> book(@Valid @RequestBody BookRequest bookRequest){
-        Book book = new Book(bookRequest.getRoom(), bookRequest.getUserId());
+        Book book = new Book(bookRequest.getRoom(), bookRequest.getUserId(), bookRequest.getFromDate(), bookRequest.getToDate());
         bookRepository.save(book);
 
         return ResponseEntity.ok().body("You have booked!");

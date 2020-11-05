@@ -11,16 +11,22 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long room_id;
 
-	@Column(name = "cleaned")
+	@Column(name = "cleaned", nullable = true)
 	private boolean cleaned = true;
 
-	@Column(name = "guested")
+	@Column(name = "guested", nullable = true)
 	private boolean guested = false;
 
-	@Column(name = "number")
+	@Column(name = "number", nullable = true)
 	private int number;
 
-	@Column(name = "floor")
+	@Column(name = "destination", nullable = true)
+	private String destination;
+
+	@Column(name = "occupancy", nullable = true)
+	private int occupancy;
+
+	@Column(name = "floor", nullable = true)
 	private int floor;
 
 	@Temporal(TemporalType.DATE)

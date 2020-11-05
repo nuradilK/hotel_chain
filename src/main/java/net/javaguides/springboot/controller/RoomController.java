@@ -18,7 +18,5 @@ public class RoomController {
 	private RoomRepository roomRepository;
 	
 	@GetMapping
-	public List<Room> getAllRooms() {
-		return roomRepository.findAll();
-	}
+	public List<Room> getAllRooms() { return roomRepository.findAll(); }
 }
