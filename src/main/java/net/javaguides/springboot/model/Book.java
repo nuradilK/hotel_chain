@@ -18,6 +18,9 @@ public class Book {
     @Column(name = "room")
     private int room;
 
+    @Column(name = "userId")
+    private int userId;
+
     public Book(Long id, int hotelId, String roomType, int room) {
         this.id = id;
         this.hotelId = hotelId;
@@ -25,10 +28,9 @@ public class Book {
         this.room = room;
     }
 
-    public Book(int hotelId, String roomType, int room) {
-        this.hotelId = hotelId;
-        this.roomType = roomType;
+    public Book(int room, int userId) {
         this.room = room;
+        this.userId = userId;
     }
 
     public Book() {}
