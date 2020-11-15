@@ -20,12 +20,12 @@ public class Book {
 
     @JsonBackReference(value = "room-book")
     @ManyToOne
-    @JoinColumn(name = "roomID")
+    @JoinColumn(name = "roomID", referencedColumnName = "roomID")
     private Room room;
 
     @JsonBackReference(value = "user-book")
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "userID", referencedColumnName = "id")
     private User user;
 
     public Book() {}
