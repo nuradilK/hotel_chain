@@ -1,4 +1,5 @@
 package net.javaguides.springboot.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
@@ -56,6 +57,11 @@ public class User {
     @JsonManagedReference(value = "user-book")
     @OneToMany(mappedBy = "user")
     private List<Book> books = new ArrayList<>();
+
+    @JsonBackReference(value = "userCategory-user")
+    @ManyToOne
+    @JoinColumn(name = "userCategoryID", referencedColumnName = "userCategoryID")
+    private UserCategory userCategory;
 
     public Long getId() { return id; }
 
