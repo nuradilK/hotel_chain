@@ -2,6 +2,7 @@ package net.javaguides.springboot.controller;
 
 import net.javaguides.springboot.model.Book;
 import net.javaguides.springboot.model.Room;
+import net.javaguides.springboot.model.User;
 import net.javaguides.springboot.payload.request.BookRequest;
 import net.javaguides.springboot.repository.BookRepository;
 import net.javaguides.springboot.repository.RoomRepository;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/book")
@@ -29,7 +31,12 @@ public class BookController {
     @PostMapping("/room")
     public ResponseEntity<?> book(@Valid @RequestBody BookRequest bookRequest){
 
-        Book book = new Book(bookRequest.getFromDate(), bookRequest.getToDate());
+        Optional<User> optionalUser = userRepository.findById(bookRequest.getUserID());
+        User user = optionalUser.get();
+        Optional<Room> optionalRoom = roomRepository.findById(bookRequest.getRoomID());
+        Room room = optionalRoom.get();
+
+        Book book = new Book(bookRequest.getFromDate(), bookRequest.getToDate(), room, user);
         bookRepository.save(book);
 
         return ResponseEntity.ok().body("You have booked!");

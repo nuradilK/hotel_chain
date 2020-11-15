@@ -6,32 +6,40 @@ import net.javaguides.springboot.model.User;
 import java.util.Date;
 
 public class BookRequest {
-    private User user;
-    private Room room;
+    private long userID;
+    private long roomID;
     private Date fromDate;
     private Date toDate;
 
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
+    public long getUserID() {
+        return userID;
     }
 
-    public void setToDate(Date toDate) {
-        this.toDate = toDate;
+    public void setUserID(long userID) {
+        this.userID = userID;
+    }
+
+    public long getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(long roomID) {
+        this.roomID = roomID;
     }
 
     public Date getFromDate() {
         return fromDate;
     }
 
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+
     public Date getToDate() {
         return toDate;
     }
 
-    public User getUser() { return user; }
-
-    public void setUser(User user) { this.user = user; }
-
-    public Room getRoom() { return room; }
-
-    public void setRoom(Room room) { this.room = room; }
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
+    }
 }

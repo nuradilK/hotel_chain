@@ -20,7 +20,7 @@ public class Book {
 
     @JsonBackReference(value = "room-book")
     @ManyToOne
-    @JoinColumn(name = "roomID", referencedColumnName = "roomID")
+    @JoinColumn(name = "roomID", referencedColumnName = "Id")
     private Room room;
 
     @JsonBackReference(value = "user-book")
@@ -30,9 +30,11 @@ public class Book {
 
     public Book() {}
 
-    public Book(Date fromDate, Date toDate) {
+    public Book(Date fromDate, Date toDate, Room room, User user) {
         this.fromDate = fromDate;
         this.toDate = toDate;
+        this.room = room;
+        this.user = user;
     }
 
     public void setId(long id) { this.id = id; }

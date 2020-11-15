@@ -5,10 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Type;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "rooms")
@@ -16,7 +14,7 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long roomID;
+    private long Id;
 
 	@Type(type="boolean")
 	private Boolean cleaned;
@@ -58,9 +56,9 @@ public class Room {
 		this.floor = floor;
 	}
 
-	public long getRoomID() { return roomID; }
+	public long getId() { return Id; }
 
-	public void setRoomID(long roomID) { this.roomID = roomID; }
+	public void setId(long roomID) { this.Id = roomID; }
 
 	public boolean isCleaned() { return cleaned; }
 
