@@ -35,18 +35,8 @@ public class BookController {
         return cal.get(Calendar.DAY_OF_WEEK);
     }
 
-    @PostMapping("/room")
-    public ResponseEntity<?> book(@Valid @RequestBody BookRequest bookRequest){
-
-        Optional<User> optionalUser = userRepository.findById(bookRequest.getUserID());
-        User user = optionalUser.get();
-        Optional<Room> optionalRoom = roomRepository.findById(bookRequest.getRoomID());
-        Room room = optionalRoom.get();
+    private double calculateBill(Date from, Date to, RoomType roomType) {
         double bill = 0;
-
-        Date from = bookRequest.getFromDate();
-        Date fromDate = new Date(from.getTime());
-        Date to = bookRequest.getToDate();
 
         List<Integer> days = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
@@ -59,7 +49,6 @@ public class BookController {
             from.setTime(from.getTime() + 86400000);
         }
 
-        RoomType roomType = room.getRoomType();
         bill += days.get(1) * roomType.getPrice_W();
         bill += days.get(2) * roomType.getPrice_R();
         bill += days.get(3) * roomType.getPrice_F();
@@ -67,6 +56,20 @@ public class BookController {
         bill += days.get(5) * roomType.getPrice_Sn();
         bill += days.get(6) * roomType.getPrice_M();
         bill += days.get(7) * roomType.getPrice_T();
+
+        return bill;
+    }
+
+    @PostMapping("/room")
+    public ResponseEntity<?> book(@Valid @RequestBody BookRequest bookRequest){
+
+        Optional<User> optionalUser = userRepository.findById(bookRequest.getUserID());
+        User user = optionalUser.get();
+        Optional<Room> optionalRoom = roomRepository.findById(bookRequest.getRoomID());
+        Room room = optionalRoom.get();
+
+        Date fromDate = new Date(bookRequest.getFromDate().getTime());
+        double bill = calculateBill(bookRequest.getFromDate(), bookRequest.getToDate(), room.getRoomType());
 
         Book book = new Book(fromDate, bookRequest.getToDate(), room, user, bill);
         bookRepository.save(book);
@@ -79,11 +82,17 @@ public class BookController {
 
         Optional<Book> optionalBook = bookRepository.findById(bookRequest.getBookID());
         Book book = optionalBook.get();
-        book.setFromDate(bookRequest.getFromDate());
+        Optional<Room> optionalRoom = roomRepository.findById(bookRequest.getRoomID());
+        Room room = optionalRoom.get();
+
+        Date fromDate = new Date(bookRequest.getFromDate().getTime());
+        book.setFromDate(fromDate);
         book.setToDate(bookRequest.getToDate());
 
-        bookRepository.save(book);
+        double bill = calculateBill(bookRequest.getFromDate(), bookRequest.getToDate(), room.getRoomType());
+        book.setBill(bill);
 
+        bookRepository.save(book);
         return ResponseEntity.ok().body("You have changed the booking!");
     }
     @GetMapping
