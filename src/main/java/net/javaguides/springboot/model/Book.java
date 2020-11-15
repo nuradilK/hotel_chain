@@ -3,7 +3,9 @@ package net.javaguides.springboot.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -18,6 +20,9 @@ public class Book {
     @Temporal(TemporalType.DATE)
     private Date toDate;
 
+    @Column(name = "bill")
+    private double bill;
+
     @JsonBackReference(value = "room-book")
     @ManyToOne
     @JoinColumn(name = "roomID", referencedColumnName = "Id")
@@ -28,13 +33,28 @@ public class Book {
     @JoinColumn(name = "userID", referencedColumnName = "id")
     private User user;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "books_has_services",
+            joinColumns = @JoinColumn(name = "bookid", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "serviceid", referencedColumnName = "serviceID"))
+    private List<Service> services = new ArrayList<>();
+
     public Book() {}
 
-    public Book(Date fromDate, Date toDate, Room room, User user) {
+    public Book(Date fromDate, Date toDate, Room room, User user, double bill) {
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.room = room;
         this.user = user;
+        this.bill = bill;
+    }
+
+    public void setBill(double bill) {
+        this.bill = bill;
+    }
+
+    public double getBill() {
+        return bill;
     }
 
     public void setId(long id) { this.id = id; }
