@@ -41,6 +41,19 @@ public class BookController {
 
         return ResponseEntity.ok().body("You have booked!");
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<?> updateBook(@Valid @RequestBody BookRequest bookRequest){
+
+        Optional<Book> optionalBook = bookRepository.findById(bookRequest.getBookID());
+        Book book = optionalBook.get();
+        book.setFromDate(bookRequest.getFromDate());
+        book.setToDate(bookRequest.getToDate());
+
+        bookRepository.save(book);
+
+        return ResponseEntity.ok().body("You have changed the booking!");
+    }
     @GetMapping
     public List<Book> getAllBooks() { return bookRepository.findAll(); }
 }

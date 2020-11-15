@@ -6,10 +6,19 @@ import net.javaguides.springboot.model.User;
 import java.util.Date;
 
 public class BookRequest {
+    private long bookID;
     private long userID;
     private long roomID;
     private Date fromDate;
     private Date toDate;
+
+    public long getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(long bookID) {
+        this.bookID = bookID;
+    }
 
     public long getUserID() {
         return userID;
