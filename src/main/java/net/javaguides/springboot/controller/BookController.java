@@ -10,6 +10,7 @@ import net.javaguides.springboot.repository.RoomRepository;
 import net.javaguides.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.SerializationUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,16 +45,20 @@ public class BookController {
         double bill = 0;
 
         Date from = bookRequest.getFromDate();
+        Date fromDate = new Date(from.getTime());
         Date to = bookRequest.getToDate();
 
-        List<Integer> days = new ArrayList<>(8);
+        List<Integer> days = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            days.add(0);
+        }
 
-        while(from.getTime() < to.getTime()) {
+        while(from.getTime() <= to.getTime()) {
             int weekDay = getDayNumberOld(from);
             days.set(weekDay, days.get(weekDay) + 1);
-
             from.setTime(from.getTime() + 86400000);
         }
+
         RoomType roomType = room.getRoomType();
         bill += days.get(1) * roomType.getPrice_W();
         bill += days.get(2) * roomType.getPrice_R();
@@ -63,7 +68,7 @@ public class BookController {
         bill += days.get(6) * roomType.getPrice_M();
         bill += days.get(7) * roomType.getPrice_T();
 
-        Book book = new Book(bookRequest.getFromDate(), bookRequest.getToDate(), room, user, bill);
+        Book book = new Book(fromDate, bookRequest.getToDate(), room, user, bill);
         bookRepository.save(book);
 
         return ResponseEntity.ok().body("You have booked!");
