@@ -1,5 +1,7 @@
 package net.javaguides.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,101 +12,46 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "hotelId")
-    private int hotelId;
-
-    @Column(name = "roomType")
-    private String roomType;
-
-    @Column(name = "room")
-    private int room;
-
-    @Column(name = "userId")
-    private int userId;
-
     @Temporal(TemporalType.DATE)
     private Date fromDate;
 
     @Temporal(TemporalType.DATE)
     private Date toDate;
 
-    public Book(Long id, int hotelId, String roomType, int room) {
-        this.id = id;
-        this.hotelId = hotelId;
-        this.roomType = roomType;
-        this.room = room;
-    }
+    @JsonBackReference(value = "room-book")
+    @ManyToOne
+    @JoinColumn(name = "roomID")
+    private Room room;
 
-    public Book(int room, int userId, Date fromDate, Date toDate) {
-        this.room = room;
-        this.userId = userId;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public void setToDate(Date toDate) {
-        this.toDate = toDate;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public Date getFromDate() {
-        return fromDate;
-    }
-
-    public Date getToDate() {
-        return toDate;
-    }
+    @JsonBackReference(value = "user-book")
+    @ManyToOne
+    @JoinColumn(name = "userID")
+    private User user;
 
     public Book() {}
 
-    public void setHotelId(int hotelId) {
-        this.hotelId = hotelId;
+    public Book(Date fromDate, Date toDate) {
+        this.fromDate = fromDate;
+        this.toDate = toDate;
     }
 
-    public void setId(int bookId) {
-        this.id = id;
-    }
+    public void setId(long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public void setFromDate(Date fromDate) { this.fromDate = fromDate; }
 
-    public int getHotelId() {
-        return hotelId;
-    }
+    public void setToDate(Date toDate) { this.toDate = toDate; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Date getFromDate() { return fromDate; }
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
-    }
+    public Date getToDate() { return toDate; }
 
-    public void setRoom(int room) {
-        this.room = room;
-    }
+    public Long getId() { return id; }
 
-    public String getRoomType() {
-        return roomType;
-    }
+    public User getUser() { return user; }
 
-    public int getRoom() {
-        return room;
-    }
+    public void setUser(User user) { this.user = user; }
+
+    public Room getRoom() { return room; }
+
+    public void setRoom(Room room) { this.room = room; }
 }

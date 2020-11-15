@@ -1,4 +1,6 @@
 package net.javaguides.springboot.model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -44,21 +46,20 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User() {
-    }
+    public User() {}
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
-    }
+    @JsonManagedReference(value = "user-book")
+    @OneToMany(mappedBy = "user")
+    private List<Book> books = new ArrayList<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
 
     public String getUsername() {
         return username;
@@ -107,5 +108,9 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public List<Book> getBooks() { return books; }
+
+    public void setBooks(List<Book> books) { this.books = books; }
 }
 

@@ -1,5 +1,7 @@
 package net.javaguides.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class Hotel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long hotelId;
+	private long hotelID;
 
 	@Column(name = "address")
 	private String address;
@@ -19,45 +21,53 @@ public class Hotel {
 	@Column(name = "name")
 	private String name;
 
+	@Column(name = "description")
+	private String description;
+
+	@Column(name = "rating")
+	private Integer rating;
+
+	@JsonManagedReference(value = "hotel-roomtype")
 	@OneToMany(mappedBy = "hotel")
 	private List<RoomType> roomTypes = new ArrayList<>();
 
 	public Hotel() {}
-
-	public Hotel(long hotelId, String address, String name, List<RoomType> roomTypes) {
-		this.hotelId = hotelId;
-		this.address = address;
-		this.name = name;
-		this.roomTypes = roomTypes;
-	}
 
 	public Hotel(String address, String name) {
 		super();
 		this.address = address;
 		this.name = name;
 	}
-	public long getHotelId() {
-		return hotelId;
-	}
-	public void setHotelId(long hotel_id) {
-		this.hotelId = hotel_id;
-	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<RoomType> getRoomTypes() {
-		return roomTypes;
-	}
-	public void setRoomTypes(List<RoomType> roomtypes) {
-		this.roomTypes = roomtypes;
-	}
+
+	public long getHotelID() { return hotelID; }
+
+	public void setHotelID(long hotelID) { this.hotelID = hotelID; }
+
+	public String getDescription() { return description; }
+
+	public void setDescription(String description) { this.description = description; }
+
+	public Integer getRating() { return rating; }
+
+	public void setRating(Integer rating) { this.rating = rating; }
+
+	public List<RoomType> getRoomTypes() { return roomTypes; }
+
+	public void setRoomTypes(List<RoomType> roomTypes) { this.roomTypes = roomTypes; }
 }

@@ -11,12 +11,12 @@ import net.javaguides.springboot.model.Room;
 import net.javaguides.springboot.repository.RoomRepository;
 
 @RestController
-@RequestMapping("/api/rooms")
+@RequestMapping("/api")
 public class RoomController {
 	
 	@Autowired
 	private RoomRepository roomRepository;
 	
-	@GetMapping
+	@GetMapping("/rooms")
 	public List<Room> getAllRooms() { return roomRepository.findAll(); }
 }

@@ -11,13 +11,13 @@ import net.javaguides.springboot.model.Hotel;
 import net.javaguides.springboot.repository.HotelRepository;
 
 @RestController
-@RequestMapping("/api/hotels")
+@RequestMapping("/api")
 public class HotelController {
 
 	@Autowired
 	private HotelRepository hotelRepository;
 
-	@GetMapping
+	@GetMapping("/hotels")
 	public List<Hotel> getAllHotels() {
 		return hotelRepository.findAll();
 	}

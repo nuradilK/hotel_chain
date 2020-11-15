@@ -1,7 +1,14 @@
 package net.javaguides.springboot.model;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Type;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "rooms")
@@ -9,89 +16,82 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long room_id;
+    private long roomID;
 
-	@Column(name = "cleaned", nullable = true)
-	private boolean cleaned = true;
+	@Type(type="boolean")
+	private Boolean cleaned;
 
-	@Column(name = "guested", nullable = true)
-	private boolean guested = false;
+	@Type(type="boolean")
+	private Boolean guested;
 
-	@Column(name = "number", nullable = true)
-	private int number;
+	@Column(name = "number")
+	private Integer number;
 
-	@Column(name = "destination", nullable = true)
+	@Column(name = "destination")
 	private String destination;
 
-	@Column(name = "occupancy", nullable = true)
-	private int occupancy;
+	@Column(name = "occupancy")
+	private Integer occupancy;
 
-	@Column(name = "floor", nullable = true)
-	private int floor;
+	@Column(name = "floor")
+	private Integer floor;
 
-	@Temporal(TemporalType.DATE)
-	private Date reservationInDate;
-
-	@Temporal(TemporalType.DATE)
-	private Date reservationOutDate;
-
+	@JsonBackReference(value = "roomtype-room")
 	@ManyToOne
-	@JoinColumn(name="roomType_id", nullable=false)
+	@JoinColumn(name = "roomtypeID", referencedColumnName = "roomtypeID")
 	private RoomType roomType;
+
+	@JsonManagedReference(value = "room-book")
+	@OneToMany(mappedBy = "room")
+	private List<Book> books = new ArrayList<>();
 
 	public Room() {}
 
-	public Room(boolean cleaned, boolean guested, int number, int floor, Date reservationInDate,
-				Date reservationOutDate) {
+	public Room(Boolean cleaned, Boolean guested, int number,
+				String destination, int occupancy, int floor) {
 		super();
 		this.cleaned = cleaned;
 		this.guested = guested;
 		this.number = number;
-		this.floor = floor;
-		this.reservationInDate = reservationInDate;
-		this.reservationOutDate = reservationOutDate;
-	}
-	public long getId() {
-		return room_id;
-	}
-	public void setId(long room_id) {
-		this.room_id = room_id;
-	}
-	public boolean getCleaned() {
-		return cleaned;
-	}
-	public void setCleaned(boolean cleaned) {
-		this.cleaned = cleaned;
-	}
-	public boolean getGuested() {
-		return guested;
-	}
-	public void setGuested(boolean guested) {
-		this.guested = guested;
-	}
-	public int getNumber() {
-		return number;
-	}
-	public void setNumber(int number) {
-		this.number = number;
-	}
-	public int getFloor() {
-		return floor;
-	}
-	public void setFloor(int floor) {
+		this.destination = destination;
+		this.occupancy = occupancy;
 		this.floor = floor;
 	}
-	public Date getReservationInDate() {
-		return reservationInDate;
-	}
-	public void setReservationInDate(Date reservationInDate) {
-		this.reservationInDate = reservationInDate;
-	}
-	public Date getReservationOutDate() {
-		return reservationOutDate;
-	}
-	public void setReservationOutDate(Date reservationOutDate) {
-		this.reservationOutDate = reservationOutDate;
-	}
+
+	public long getRoomID() { return roomID; }
+
+	public void setRoomID(long roomID) { this.roomID = roomID; }
+
+	public boolean isCleaned() { return cleaned; }
+
+	public void setCleaned(boolean cleaned) { this.cleaned = cleaned; }
+
+	public boolean isGuested() { return guested; }
+
+	public void setGuested(boolean guested) { this.guested = guested; }
+
+	public Integer getNumber() { return number; }
+
+	public void setNumber(Integer number) { this.number = number; }
+
+	public String getDestination() { return destination; }
+
+	public void setDestination(String destination) { this.destination = destination; }
+
+	public int getOccupancy() { return occupancy; }
+
+	public void setOccupancy(int occupancy) { this.occupancy = occupancy; }
+
+	public Integer getFloor() { return floor; }
+
+	public void setFloor(Integer floor) { this.floor = floor; }
+
+	public RoomType getRoomType() { return roomType; }
+
+	public void setRoomType(RoomType roomType) { this.roomType = roomType; }
+
+	public List<Book> getBooks() { return books; }
+
+	public void setBooks(List<Book> books) { this.books = books; }
 
 }
