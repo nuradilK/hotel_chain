@@ -8,7 +8,6 @@ import java.util.Set;
 @Entity
 @Table(name = "services")
 public class Service {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long serviceID;

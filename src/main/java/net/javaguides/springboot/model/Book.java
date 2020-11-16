@@ -49,6 +49,14 @@ public class Book {
         this.bill = bill;
     }
 
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
     public void setBill(double bill) {
         this.bill = bill;
     }
