@@ -32,6 +32,7 @@ public class ServiceController {
         Optional<Service> optionalService = serviceRepository.findById(serviceRequest.getServiceId());
         Book book = optionalBook.get();
         Service service = optionalService.get();
+        book.setBill(book.getBill() + service.getPrice());
 
         List<Service> services = book.getServices();
 
