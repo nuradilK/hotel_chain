@@ -42,7 +42,12 @@ public class HotelController {
 		return ResponseEntity.ok().body("You have added an employee!");
 	}
 
-	@GetMapping("/all")
+	@GetMapping("/all/employees")
+	public List<Employee> getAllEmployees() {
+		return employeeRepository.findAll();
+	}
+
+	@GetMapping("/all/hotels")
 	public List<Hotel> getAllHotels() {
 		return hotelRepository.findAll();
 	}
