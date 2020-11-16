@@ -31,12 +31,24 @@ public class Hotel {
 	@OneToMany(mappedBy = "hotel")
 	private List<RoomType> roomTypes = new ArrayList<>();
 
+	@JsonManagedReference(value = "hotel-employee")
+	@OneToMany(mappedBy = "hotel")
+	private List<Employee> employees = new ArrayList<>();
+
 	public Hotel() {}
 
 	public Hotel(String address, String name) {
 		super();
 		this.address = address;
 		this.name = name;
+	}
+
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 
 	public String getAddress() {
