@@ -4,6 +4,15 @@ public class ServiceRequest {
     private long bookId;
     private long serviceId;
     private String name;
+    private int price;
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
     public String getName() {
         return name;
