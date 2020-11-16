@@ -35,12 +35,26 @@ public class Hotel {
 	@OneToMany(mappedBy = "hotel")
 	private List<Employee> employees = new ArrayList<>();
 
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "hotels_have_seasons",
+			joinColumns = @JoinColumn(name = "hotelID", referencedColumnName = "hotelID"),
+			inverseJoinColumns = @JoinColumn(name = "seasonId", referencedColumnName = "seasonId"))
+	private List<Season> seasons = new ArrayList<>();
+
 	public Hotel() {}
 
 	public Hotel(String address, String name) {
 		super();
 		this.address = address;
 		this.name = name;
+	}
+
+	public List<Season> getSeasons() {
+		return seasons;
+	}
+
+	public void setSeasons(List<Season> seasons) {
+		this.seasons = seasons;
 	}
 
 	public List<Employee> getEmployees() {

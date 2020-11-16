@@ -6,6 +6,15 @@ public class HotelRequest {
     private String employeePosition;
     private int employeeHours;
     private int employeeSalary;
+    private long seasonId;
+
+    public long getSeasonId() {
+        return seasonId;
+    }
+
+    public void setSeasonId(long seasonId) {
+        this.seasonId = seasonId;
+    }
 
     public long getHotelId() {
         return hotelId;

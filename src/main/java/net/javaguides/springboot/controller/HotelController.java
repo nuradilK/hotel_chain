@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import net.javaguides.springboot.model.Employee;
+import net.javaguides.springboot.model.Season;
 import net.javaguides.springboot.payload.request.BookRequest;
 import net.javaguides.springboot.payload.request.HotelRequest;
 import net.javaguides.springboot.repository.EmployeeRepository;
+import net.javaguides.springboot.repository.SeasonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +29,11 @@ public class HotelController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
+	@Autowired
+	private SeasonRepository seasonRepository;
+
 	@PostMapping("/add/employee")
-	public ResponseEntity<?> book(@Valid @RequestBody HotelRequest hotelRequest) {
+	public ResponseEntity<?> addEmployee(@Valid @RequestBody HotelRequest hotelRequest) {
 		Optional<Hotel> hotelOptional = hotelRepository.findById(hotelRequest.getHotelId());
 		Hotel hotel = hotelOptional.get();
 
@@ -40,6 +45,23 @@ public class HotelController {
 		hotelRepository.save(hotel);
 
 		return ResponseEntity.ok().body("You have added an employee!");
+	}
+
+	@PostMapping("/add/season")
+	public ResponseEntity<?> addSeason(@Valid @RequestBody HotelRequest hotelRequest) {
+		Optional<Hotel> hotelOptional = hotelRepository.findById(hotelRequest.getHotelId());
+		Hotel hotel = hotelOptional.get();
+
+		List<Season> seasons = hotel.getSeasons();
+		Optional<Season> seasonOptional = seasonRepository.findById(hotelRequest.getSeasonId());
+		Season season = seasonOptional.get();
+
+		System.out.println(season.getName());
+
+		seasons.add(season);
+		hotelRepository.save(hotel);
+
+		return ResponseEntity.ok().body("You have added a season!");
 	}
 
 	@GetMapping("/all/employees")
