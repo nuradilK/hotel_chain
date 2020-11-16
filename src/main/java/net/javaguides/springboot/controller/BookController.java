@@ -95,6 +95,16 @@ public class BookController {
         bookRepository.save(book);
         return ResponseEntity.ok().body("You have changed the booking!");
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteBook(@Valid @RequestBody BookRequest bookRequest){
+        Optional<Book> optionalBook = bookRepository.findById(bookRequest.getBookID());
+        Book book = optionalBook.get();
+
+        bookRepository.delete(book);
+        return ResponseEntity.ok().body("You have deleted the booking!");
+    }
+
     @GetMapping
     public List<Book> getAllBooks() { return bookRepository.findAll(); }
 }
