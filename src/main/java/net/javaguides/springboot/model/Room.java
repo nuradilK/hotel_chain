@@ -34,7 +34,7 @@ public class Room {
 	@Column(name = "floor")
 	private Integer floor;
 
-	@JsonBackReference(value = "roomtype-room")
+	@JsonManagedReference(value = "roomtype-room")
 	@ManyToOne
 	@JoinColumn(name = "roomtypeID", referencedColumnName = "roomtypeID")
 	private RoomType roomType;

@@ -46,7 +46,7 @@ public class RoomType {
 	@Column(name = "price_Sn")
 	private Integer price_Sn;
 
-	@JsonManagedReference(value = "roomtype-room")
+	@JsonBackReference(value = "roomtype-room")
 	@OneToMany(mappedBy = "roomType")
 	private List<Room> rooms = new ArrayList<>();
 
