@@ -1,5 +1,6 @@
 package net.javaguides.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class Hotel {
 	@Column(name = "rating")
 	private Integer rating;
 
-	@JsonManagedReference(value = "hotel-roomtype")
+	@JsonBackReference(value = "hotel-roomtype")
 	@OneToMany(mappedBy = "hotel")
 	private List<RoomType> roomTypes = new ArrayList<>();
 
