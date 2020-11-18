@@ -1,10 +1,13 @@
 package net.javaguides.springboot.controller;
 
 import net.javaguides.springboot.model.User;
+import net.javaguides.springboot.model.UserCategory;
 import net.javaguides.springboot.payload.request.LoginRequest;
 import net.javaguides.springboot.payload.request.SignupRequest;
+import net.javaguides.springboot.payload.request.UserCategoryRequest;
 import net.javaguides.springboot.payload.response.JwtResponse;
 import net.javaguides.springboot.payload.response.MessageResponse;
+import net.javaguides.springboot.repository.UserCategoryRepository;
 import net.javaguides.springboot.repository.UserRepository;
 import net.javaguides.springboot.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,9 @@ public class UserController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserCategoryRepository userCategoryRepository;
 
     @Autowired
     JwtUtils jwtUtils;
@@ -59,6 +65,22 @@ public class UserController {
                 newUser.getEmail(),
                 jwt
         ));
+    }
+
+    @PostMapping("/add/userCategory")
+    public ResponseEntity<?> createCategory(@Valid @RequestBody UserCategoryRequest userCategoryRequest){
+        Optional<User> userOptional = userRepository.findById(userCategoryRequest.getUserId());
+        User user = userOptional.get();
+        Optional<UserCategory> userCategoryOptional = userCategoryRepository.findById(userCategoryRequest.getUserCategoryId());
+        UserCategory userCategory = userCategoryOptional.get();
+
+        List<User> users = userCategory.getUsers();
+        users.add(user);
+        user.setUserCategory(userCategory);
+        userRepository.save(user);
+        userCategoryRepository.save(userCategory);
+
+        return ResponseEntity.ok().body("You have added a user to a category!");
     }
 
     @PostMapping("/signin")

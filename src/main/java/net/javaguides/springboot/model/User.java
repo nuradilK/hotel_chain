@@ -63,6 +63,14 @@ public class User {
     @JoinColumn(name = "userCategoryID", referencedColumnName = "userCategoryID")
     private UserCategory userCategory;
 
+    public UserCategory getUserCategory() {
+        return userCategory;
+    }
+
+    public void setUserCategory(UserCategory userCategory) {
+        this.userCategory = userCategory;
+    }
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }

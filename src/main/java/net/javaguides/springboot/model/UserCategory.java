@@ -24,6 +24,11 @@ public class UserCategory {
     @OneToMany(mappedBy = "userCategory")
     private List<User> users = new ArrayList<>();
 
+    public UserCategory(String name, double coefficient) {
+        this.name = name;
+        this.coefficient = coefficient;
+    }
+
     public UserCategory(String name, double coefficient, List<User> users) {
         super();
         this.name = name;

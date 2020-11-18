@@ -32,6 +32,14 @@ public class Season {
         this.coefficient = coefficient;
     }
 
+    public long getSeasonId() {
+        return seasonId;
+    }
+
+    public void setSeasonId(long seasonId) {
+        this.seasonId = seasonId;
+    }
+
     public String getName() {
         return name;
     }
@@ -48,12 +56,12 @@ public class Season {
         this.startDate = startDate;
     }
 
-    public Date getFromDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setFromDate(Date fromDate) {
-        this.endDate = fromDate;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public double getCoefficient() {

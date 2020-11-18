@@ -1,9 +1,6 @@
 package net.javaguides.springboot.controller;
 
-import net.javaguides.springboot.model.Book;
-import net.javaguides.springboot.model.Room;
-import net.javaguides.springboot.model.RoomType;
-import net.javaguides.springboot.model.User;
+import net.javaguides.springboot.model.*;
 import net.javaguides.springboot.payload.request.BookRequest;
 import net.javaguides.springboot.repository.BookRepository;
 import net.javaguides.springboot.repository.RoomRepository;
@@ -94,6 +91,28 @@ public class BookController {
 
         bookRepository.save(book);
         return ResponseEntity.ok().body("You have changed the booking!");
+    }
+
+    @GetMapping("/bill")
+    public double getBill(@Valid @RequestBody BookRequest bookRequest){
+        Optional<Book> optionalBook = bookRepository.findById(bookRequest.getBookID());
+        Book book = optionalBook.get();
+        Room room = book.getRoom();
+        RoomType roomtype = room.getRoomType();
+        Hotel hotel = roomtype.getHotel();
+        List<Season> seasons = hotel.getSeasons();
+        Date curDate = book.getFromDate();
+        Season season = new Season();
+        for(Season iSeason: seasons){
+            if(curDate.after(iSeason.getStartDate()) && !curDate.after(iSeason.getEndDate())){
+                season = iSeason;
+                System.out.println("!");
+            }
+        }
+        User user = book.getUser();
+        UserCategory userCategory = user.getUserCategory();
+
+        return book.getBill()*season.getCoefficient()*userCategory.getCoefficient();
     }
 
     @PostMapping("/delete")
