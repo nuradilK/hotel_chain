@@ -32,6 +32,14 @@ public class Hotel {
 	@OneToMany(mappedBy = "hotel")
 	private List<RoomType> roomTypes = new ArrayList<>();
 
+	@JsonBackReference(value = "hotel-feature")
+	@OneToMany(mappedBy = "hotel")
+	private List<RoomType> features = new ArrayList<>();
+
+	@JsonBackReference(value = "hotel-phone")
+	@OneToMany(mappedBy = "hotel")
+	private List<RoomType> phoneNumbers = new ArrayList<>();
+
 	@JsonManagedReference(value = "hotel-employee")
 	@OneToMany(mappedBy = "hotel")
 	private List<Employee> employees = new ArrayList<>();

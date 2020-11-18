@@ -50,6 +50,10 @@ public class RoomType {
 	@OneToMany(mappedBy = "roomType")
 	private List<Room> rooms = new ArrayList<>();
 
+	@JsonBackReference(value = "roomType-feature")
+	@OneToMany(mappedBy = "roomType")
+	private List<RoomFeature> roomFeatures = new ArrayList<>();
+
 	@JsonManagedReference(value = "hotel-roomtype")
 	@ManyToOne
 	@JoinColumn(name = "hotelID", referencedColumnName = "hotelID")
