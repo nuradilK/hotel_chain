@@ -1,8 +1,11 @@
 package net.javaguides.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "employees")
@@ -27,6 +30,15 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "hotelID", referencedColumnName = "hotelID")
     private Hotel hotel;
+
+    @JsonManagedReference(value = "supervisor-subordinate")
+    @OneToMany(mappedBy="supervisor")
+    private Set<Employee> subordinates = new HashSet<>();
+
+    @JsonBackReference(value = "supervisor-subordinate")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name="supervisorID", nullable = true)
+    private Employee supervisor;
 
     public Employee(String name, String position, int hours, int salary, Hotel hotel) {
         this.name = name;
