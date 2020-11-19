@@ -85,6 +85,7 @@ public class BookController {
         Date fromDate = new Date(bookRequest.getFromDate().getTime());
         book.setFromDate(fromDate);
         book.setToDate(bookRequest.getToDate());
+        book.setRoom(room);
 
         double bill = calculateBill(bookRequest.getFromDate(), bookRequest.getToDate(), room.getRoomType());
         book.setBill(bill);
