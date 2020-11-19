@@ -2,11 +2,20 @@ package net.javaguides.springboot.payload.request;
 
 public class HotelRequest {
     private long hotelId;
+    private long seasonId;
+    private long employeeId;
     private String employeeName;
     private String employeePosition;
     private int employeeHours;
     private int employeeSalary;
-    private long seasonId;
+
+    public long getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(long hotelId) {
+        this.hotelId = hotelId;
+    }
 
     public long getSeasonId() {
         return seasonId;
@@ -16,12 +25,12 @@ public class HotelRequest {
         this.seasonId = seasonId;
     }
 
-    public long getHotelId() {
-        return hotelId;
+    public long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setHotelId(long hotelId) {
-        this.hotelId = hotelId;
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getEmployeeName() {

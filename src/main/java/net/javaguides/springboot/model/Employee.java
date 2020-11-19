@@ -31,14 +31,16 @@ public class Employee {
     @JoinColumn(name = "hotelID", referencedColumnName = "hotelID")
     private Hotel hotel;
 
-    @JsonManagedReference(value = "supervisor-subordinate")
+    @JsonBackReference(value = "supervisor-subordinate")
     @OneToMany(mappedBy="supervisor")
     private Set<Employee> subordinates = new HashSet<>();
 
-    @JsonBackReference(value = "supervisor-subordinate")
+    @JsonManagedReference(value = "supervisor-subordinate")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name="supervisorID", nullable = true)
     private Employee supervisor;
+
+    public Employee() { }
 
     public Employee(String name, String position, int hours, int salary, Hotel hotel) {
         this.name = name;

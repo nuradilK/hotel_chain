@@ -64,6 +64,20 @@ public class HotelController {
 		return ResponseEntity.ok().body("You have added a season!");
 	}
 
+	@PostMapping("/update/employee")
+	public ResponseEntity<?> updateEmployee(@Valid @RequestBody HotelRequest hotelRequest) {
+		Optional<Employee> employeeOptional = employeeRepository.findById(hotelRequest.getEmployeeId());
+		Employee employee = employeeOptional.get();
+
+		employee.setPosition(hotelRequest.getEmployeePosition());
+		employee.setHours(hotelRequest.getEmployeeHours());
+		employee.setSalary(hotelRequest.getEmployeeSalary());
+
+		employeeRepository.save(employee);
+		return ResponseEntity.ok().body("You have updated an employee information!");
+	}
+
+
 	@GetMapping("/all/employees")
 	public List<Employee> getAllEmployees() {
 		return employeeRepository.findAll();
