@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import net.javaguides.springboot.model.Employee;
 import net.javaguides.springboot.model.Season;
+import net.javaguides.springboot.model.Service;
 import net.javaguides.springboot.payload.request.BookRequest;
 import net.javaguides.springboot.payload.request.HotelRequest;
 import net.javaguides.springboot.repository.EmployeeRepository;
@@ -77,6 +78,21 @@ public class HotelController {
 		return ResponseEntity.ok().body("You have updated an employee information!");
 	}
 
+	@PostMapping("/delete/season")
+	public ResponseEntity<?> deleteSeason(@Valid @RequestBody HotelRequest hotelRequest) {
+		Optional<Season> seasonOptional = seasonRepository.findById(hotelRequest.getSeasonId());
+		Season season = seasonOptional.get();
+
+		season.getHotels().clear();
+
+		List<Hotel> hotels = hotelRepository.findAll();
+		for (Hotel hotel: hotels) {
+			hotel.getSeasons().remove(season);
+		}
+
+		seasonRepository.delete(season);
+		return ResponseEntity.ok().body("You have deleted the season!");
+	}
 
 	@GetMapping("/all/employees")
 	public List<Employee> getAllEmployees() {

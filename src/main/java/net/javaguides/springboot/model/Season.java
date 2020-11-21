@@ -1,7 +1,9 @@
 package net.javaguides.springboot.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "seasons")
@@ -21,6 +23,9 @@ public class Season {
 
     @Column(name = "coefficient")
     private double coefficient;
+
+    @ManyToMany(mappedBy = "seasons")
+    private List<Hotel> hotels = new ArrayList<>();
 
     public Season() {
     }
@@ -70,5 +75,13 @@ public class Season {
 
     public void setCoefficient(double coefficient) {
         this.coefficient = coefficient;
+    }
+
+    public List<Hotel> getHotels() {
+        return hotels;
+    }
+
+    public void setHotels(List<Hotel> hotels) {
+        this.hotels = hotels;
     }
 }
