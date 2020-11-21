@@ -39,7 +39,7 @@ public class Room {
 	@JoinColumn(name = "roomtypeID", referencedColumnName = "roomtypeID")
 	private RoomType roomType;
 
-	@JsonManagedReference(value = "room-book")
+	@JsonBackReference(value = "room-book")
 	@OneToMany(mappedBy = "room")
 	private List<Book> books = new ArrayList<>();
 

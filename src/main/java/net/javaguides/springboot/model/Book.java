@@ -1,6 +1,7 @@
 package net.javaguides.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,12 +24,12 @@ public class Book {
     @Column(name = "bill")
     private double bill;
 
-    @JsonBackReference(value = "room-book")
+    @JsonManagedReference(value = "room-book")
     @ManyToOne
     @JoinColumn(name = "roomID", referencedColumnName = "Id")
     private Room room;
 
-    @JsonBackReference(value = "user-book")
+    @JsonManagedReference(value = "user-book")
     @ManyToOne
     @JoinColumn(name = "userID", referencedColumnName = "id")
     private User user;

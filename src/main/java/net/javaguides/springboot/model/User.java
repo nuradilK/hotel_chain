@@ -54,7 +54,7 @@ public class User {
         this.password = password;
     }
 
-    @JsonManagedReference(value = "user-book")
+    @JsonBackReference(value = "user-book")
     @OneToMany(mappedBy = "user")
     private List<Book> books = new ArrayList<>();
 
