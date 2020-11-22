@@ -1,5 +1,6 @@
 package net.javaguides.springboot.controller;
 
+import net.javaguides.springboot.model.Role;
 import net.javaguides.springboot.model.User;
 import net.javaguides.springboot.model.UserCategory;
 import net.javaguides.springboot.payload.request.LoginRequest;
@@ -7,6 +8,7 @@ import net.javaguides.springboot.payload.request.SignupRequest;
 import net.javaguides.springboot.payload.request.UserCategoryRequest;
 import net.javaguides.springboot.payload.response.JwtResponse;
 import net.javaguides.springboot.payload.response.MessageResponse;
+import net.javaguides.springboot.repository.RoleRepository;
 import net.javaguides.springboot.repository.UserCategoryRepository;
 import net.javaguides.springboot.repository.UserRepository;
 import net.javaguides.springboot.security.jwt.JwtUtils;
@@ -31,6 +33,9 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -52,7 +57,14 @@ public class UserController {
         if (userRepository.existsByEmail(signUpRequest.getEmail())){
             return ResponseEntity.badRequest().body(new MessageResponse("A user with this email is registered!"));
         }
-        User newUser = new User(signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()));
+
+        Role role;
+        if (signUpRequest.getRole() == null) {
+            role = roleRepository.findByName("User");
+        } else {
+            role = roleRepository.findByName(signUpRequest.getRole());
+        }
+        User newUser = new User(signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()), role);
         userRepository.save(newUser);
 
         Authentication authentication = authenticationManager.authenticate(
@@ -63,7 +75,8 @@ public class UserController {
         return ResponseEntity.ok(new JwtResponse(
                 newUser.getId(),
                 newUser.getEmail(),
-                jwt
+                jwt,
+                role
         ));
     }
 
@@ -99,7 +112,8 @@ public class UserController {
             return ResponseEntity.ok(new JwtResponse(
                     user.getId(),
                     user.getEmail(),
-                    jwt
+                    jwt,
+                    user.getRole()
             ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse("Incorrect login or password"));

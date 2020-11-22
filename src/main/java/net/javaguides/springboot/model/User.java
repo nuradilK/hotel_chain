@@ -1,6 +1,7 @@
 package net.javaguides.springboot.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Type;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,12 +27,26 @@ public class User {
     private String firstName;
 
     @Size(max = 20)
-    @Column(name = "second_name")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Size(max = 20)
-    @Column(name = "username")
-    private String username;
+    @Column(name = "id_type")
+    private String idType;
+
+    @Column(name = "id_number")
+    private String idNumber;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "home_phone_number")
+    private String homePhoneNumber;
+
+    @Column(name = "mobile_phohe_number")
+    private String mobilePhoneNumber;
+
+    @Type(type="boolean")
+    private Boolean notification;
 
     @Size(max = 50)
     @Column(name = "email")
@@ -41,18 +56,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(	name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
-
-    public User() {}
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+    @JsonManagedReference(value = "user-role")
+    @ManyToOne
+    @JoinColumn(name = "roleID", referencedColumnName = "id")
+    private Role role;
 
     @JsonBackReference(value = "user-book")
     @OneToMany(mappedBy = "user")
@@ -63,24 +70,20 @@ public class User {
     @JoinColumn(name = "userCategoryID", referencedColumnName = "userCategoryID")
     private UserCategory userCategory;
 
-    public UserCategory getUserCategory() {
-        return userCategory;
+    public User() {}
+
+    public User(String email, String password, Role role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
-    public void setUserCategory(UserCategory userCategory) {
-        this.userCategory = userCategory;
+    public Long getId() {
+        return id;
     }
 
-    public Long getId() { return id; }
-
-    public void setId(Long id) { this.id = id; }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -99,6 +102,54 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getIdType() {
+        return idType;
+    }
+
+    public void setIdType(String idType) {
+        this.idType = idType;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getHomePhoneNumber() {
+        return homePhoneNumber;
+    }
+
+    public void setHomePhoneNumber(String homePhoneNumber) {
+        this.homePhoneNumber = homePhoneNumber;
+    }
+
+    public String getMobilePhoneNumber() {
+        return mobilePhoneNumber;
+    }
+
+    public void setMobilePhoneNumber(String mobilePhoneNumber) {
+        this.mobilePhoneNumber = mobilePhoneNumber;
+    }
+
+    public Boolean getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Boolean notification) {
+        this.notification = notification;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -115,16 +166,28 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public List<Book> getBooks() { return books; }
+    public List<Book> getBooks() {
+        return books;
+    }
 
-    public void setBooks(List<Book> books) { this.books = books; }
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public UserCategory getUserCategory() {
+        return userCategory;
+    }
+
+    public void setUserCategory(UserCategory userCategory) {
+        this.userCategory = userCategory;
+    }
 }
 

@@ -1,6 +1,10 @@
 package net.javaguides.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -9,16 +13,14 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private Roles name;
+    private String name;
 
-    public Role() {
-    }
+    @JsonBackReference(value = "user-role")
+    @OneToMany(mappedBy = "role")
+    private List<User> users = new ArrayList<>();
 
-    public Role(Roles name) {
-        this.name = name;
-    }
+    public Role() { }
 
     public Integer getId() {
         return id;
@@ -28,11 +30,19 @@ public class Role {
         this.id = id;
     }
 
-    public Roles getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Roles name) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

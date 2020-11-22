@@ -9,13 +9,11 @@ public class SignupRequest {
     @Size(min = 3, max = 20)
     private String username;
 
-
     @Size(max = 50)
 
     private String email;
 
-    private Set<String> role;
-
+    private String role;
 
     @Size(min = 6, max = 40)
     private String password;
@@ -44,11 +42,11 @@ public class SignupRequest {
         this.password = password;
     }
 
-    public Set<String> getRole() {
-        return this.role;
+    public String getRole() {
+        return role;
     }
 
-    public void setRole(Set<String> role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }

@@ -1,18 +1,20 @@
 package net.javaguides.springboot.payload.response;
 
+import net.javaguides.springboot.model.Role;
+
 import java.util.List;
 
 public class JwtResponse {
     private Long id;
     private String email;
     private String jwtToken;
-    //private List<String> roles;
+    private Role role;
 
-    public JwtResponse(Long id, String email, String jwtToken) {
+    public JwtResponse(Long id, String email, String jwtToken, Role role) {
         this.id = id;
         this.email = email;
         this.jwtToken = jwtToken;
-        //this.roles = roles;
+        this.role = role;
     }
 
     public String getAccessToken(){ return jwtToken; }
@@ -35,4 +37,11 @@ public class JwtResponse {
         this.email = email;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
