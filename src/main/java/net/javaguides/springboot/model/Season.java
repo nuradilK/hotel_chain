@@ -24,8 +24,8 @@ public class Season {
     @Column(name = "coefficient")
     private double coefficient;
 
-    @ManyToMany(mappedBy = "seasons")
-    private List<Hotel> hotels = new ArrayList<>();
+//    @ManyToMany(mappedBy = "seasons")
+//    private List<Hotel> hotels = new ArrayList<>();
 
     public Season() {
     }
@@ -77,11 +77,11 @@ public class Season {
         this.coefficient = coefficient;
     }
 
-    public List<Hotel> getHotels() {
-        return hotels;
-    }
-
-    public void setHotels(List<Hotel> hotels) {
-        this.hotels = hotels;
-    }
+//    public List<Hotel> getHotels() {
+//        return hotels;
+//    }
+//
+//    public void setHotels(List<Hotel> hotels) {
+//        this.hotels = hotels;
+//    }
 }

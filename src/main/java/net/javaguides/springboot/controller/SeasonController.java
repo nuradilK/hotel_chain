@@ -1,5 +1,6 @@
 package net.javaguides.springboot.controller;
 
+import net.javaguides.springboot.model.Book;
 import net.javaguides.springboot.model.Hotel;
 import net.javaguides.springboot.model.Season;
 import net.javaguides.springboot.payload.request.BookRequest;
@@ -39,4 +40,14 @@ public class SeasonController {
         hotelRepository.save(hotel);
         return ResponseEntity.ok().body("You have created a season!");
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteSeason(@Valid @RequestBody SeasonRequest seasonRequest) {
+        Optional<Season> optionalSeason = seasonRepository.findById(seasonRequest.getSeasonId());
+        Season season = optionalSeason.get();
+
+        seasonRepository.delete(season);
+        return ResponseEntity.ok().body("You have deleted the season!");
+    }
+
 }

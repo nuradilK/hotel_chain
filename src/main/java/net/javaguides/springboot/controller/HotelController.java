@@ -83,7 +83,6 @@ public class HotelController {
 		Optional<Season> seasonOptional = seasonRepository.findById(hotelRequest.getSeasonId());
 		Season season = seasonOptional.get();
 
-		season.getHotels().clear();
 
 		List<Hotel> hotels = hotelRepository.findAll();
 		for (Hotel hotel: hotels) {
