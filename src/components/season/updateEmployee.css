@@ -1,0 +1,41 @@
+.update-employee {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 450px;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.cancel {
+    margin-right: 20px;
+    margin-left: auto;
+    height: 50px;
+}
+
+.element {
+    width: 300px;
+    margin: 0 auto;
+    height: 50px;
+}
+
+.update {
+    width: 400px;
+    height: 50px;
+}
+
+.update-employee_header {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.update-employee_input {
+    width: 90%;
+    height: 50px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+

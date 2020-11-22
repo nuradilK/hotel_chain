@@ -1,0 +1,49 @@
+.update-modal {
+    display: flex; /* Hidden by default */
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+.employees-list {
+    display: flex;
+    flex-direction: column;
+
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+
+.employees-list_header {
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.employees-list-element {
+    width: 80%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.employees-list-element_part {
+    margin: 0 auto;
+}
+
+.employees-list-element_btn {
+    margin-right: 20px;
+}

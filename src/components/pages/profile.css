@@ -1,0 +1,52 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.profile-container .profile-container_header {
+    margin: 10px auto;
+}
+
+.profile-container .profile-container_info {
+    margin: 10px auto;
+    padding: 10px;
+
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.profile-container .booking-list {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.profile-container .booking-list .booking-list_header {
+    margin-top: 10px;
+}
+
+.profile-container .booking-list .booking-list_element {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-container .booking-list .booking-list_element:hover {
+    background-color: gray;
+}
+
+
+.profile-container .booking-list .booking-list_element .booking-list_element_info {
+    margin: 0 10px;
+}
+
+.profile-container .booking-list_element .booking-list_element_btn {
+    margin-right: 10px;
+    margin-left: auto;
+}

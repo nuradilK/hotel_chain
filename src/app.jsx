@@ -10,13 +10,21 @@ import { Register } from "./components/pages/register";
 import './app.css';
 import {PrivateRoute} from "./components/private-route/private-route";
 import {Profile} from "./components/pages/profile";
+import {SearchAvailableRooms} from "./components/pages/search-available-room";
+import {DeskClearManageBookings} from "./components/pages/desk-clerk-manage-bookings";
+import {EmployeesReview} from "./components/pages/employees-review";
+import {Seasons} from "./components/pages/seasons";
+import {Notification} from "./components/pages/notification";
 
 ReactDOM.render(
     <React.StrictMode>
         <Router>
+            <Notification/>
             <Navbar/>
             <Switch>
                 <Route exact path='/'>
+                    {/*<EmployeesReview/>*/}
+                    {/*<Seasons/>*/}
                     <Home/>
                 </Route>
                 <Route exact path='/login'>
@@ -26,6 +34,10 @@ ReactDOM.render(
                     <Register/>
                 </Route>
                 <PrivateRoute exact path='/profile' component={Profile}/>
+                <PrivateRoute exact path='/booking' component={SearchAvailableRooms}/>
+                <PrivateRoute exact path='/deskclerk' component={DeskClearManageBookings}/>
+                <PrivateRoute exact path='/employees' component={EmployeesReview}/>
+                <PrivateRoute exact path='/seasons' component={Seasons}/>
             </Switch>
         </Router>
     </React.StrictMode>,
