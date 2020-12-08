@@ -15,20 +15,27 @@
 }
 
 
-.employees-list {
+.season-container {
     display: flex;
     flex-direction: column;
-
-    /*justify-content: center;*/
-    /*align-items: center;*/
+    justify-content: center;
+    align-items: center;
 }
 
-.employees-list_header {
+.search-container_manager {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.season-container_header {
     font-size: 25px;
-    margin: 20px auto 30px;
+    margin-bottom: 20px;
 }
 
-.employees-list-element {
+.season-element {
     width: 80%;
     height: 50px;
     display: flex;
@@ -40,10 +47,11 @@
     margin-bottom: 30px;
 }
 
-.employees-list-element_part {
+.season-element_part {
     margin: 0 auto;
 }
 
-.employees-list-element_btn {
+.season-element_btn {
+    margin-left: auto;
     margin-right: 20px;
 }

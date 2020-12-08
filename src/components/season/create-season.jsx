@@ -5,10 +5,11 @@ import './updateEmployee.css';
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import Select from "@material-ui/core/Select/Select";
-
+import FormControl from "@material-ui/core/FormControl";
+import {useHistory} from 'react-router-dom';
 export const CreateSeason = (props) => {
     const { hotels, cancel} = props;
-
+    const history = useHistory();
     const today = new Date();
     const todayString = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
     console.log(todayString);
@@ -65,6 +66,7 @@ export const CreateSeason = (props) => {
             coefficient: parseFloat(coefficient)
         }).then(()=>{
             alert('you successfully created new season');
+            history.go(0);
             // history.push('/seasons');
             //TODO: Add to season function.
         })
@@ -74,15 +76,17 @@ export const CreateSeason = (props) => {
         <div className='cancel' onClick={cancel}>X</div>
         <div className='update-employee_header'>Create season route</div>
         <div className='update-employee_input'>
-            <InputLabel id="demo-simple-select-label">Hotel IDs</InputLabel>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={selectedHotel}
-                onChange={onChangeSelectedHotel}
-            >
-                {hotelsList.map(hotel => hotel)}
-            </Select>
+            <FormControl style={{width: '100%', height: '100%'}}>
+                <InputLabel  id="demo-simple-select-label">Hotel IDs</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={selectedHotel}
+                    onChange={onChangeSelectedHotel}
+                >
+                    {hotelsList.map(hotel => hotel)}
+                </Select>
+            </FormControl>
         </div>
         <div className='update-employee_input'>
             <TextField
@@ -108,11 +112,11 @@ export const CreateSeason = (props) => {
         </div>
         <div className='update-employee_input'>
             <label htmlFor="startDate">start date:</label>
-            <input id="startDate" type='date' value={startDate} onChange={onChangeStartDate}/>
+            <input style={{width: '100%'}} id="startDate" type='date' value={startDate} onChange={onChangeStartDate}/>
         </div>
         <div className='update-employee_input'>
             <label htmlFor="endDate">end date:</label>
-            <input id="endDate" type='date' value={endDate} onChange={onChangeEndDate}/>
+            <input style={{width: '100%'}} id="endDate" type='date' value={endDate} onChange={onChangeEndDate}/>
         </div>
         <Button  variant="contained"
                  color="primary"

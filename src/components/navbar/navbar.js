@@ -23,15 +23,19 @@ export const Navbar = () => {
     return (
         <div className='navbar'>
             <Link to='/' className='navbar__home'>Home</Link>
-            <Link to='/booking' className='navbar__home'>Booking</Link>
+            <Link to='/services' className='navbar__home'>Services</Link>
+            <Link to='/createService' className='navbar__home'>Create service</Link>
             {
-                currentUser !== null && <Link to='/employees' className='navbar__home'>Employees</Link>
+                currentUser !== null && currentUser.role.name === 'User' && <Link to='/booking' className='navbar__home'>Booking</Link>
             }
             {
-                currentUser !== null && <Link to='/seasons' className='navbar__home'>Seasons</Link>
+                currentUser !== null && currentUser.role.name === 'Manager' && <Link to='/employees' className='navbar__home'>Employees</Link>
             }
             {
-                currentUser !== null && <Link to='/deskclerk' className='navbar__home'>Manage bookings</Link>
+                currentUser !== null && currentUser.role.name === 'Manager' && <Link to='/seasons' className='navbar__home'>Seasons</Link>
+            }
+            {
+                currentUser !== null && currentUser.role.name === 'Desk_clerk' && <Link to='/deskclerk' className='navbar__home'>Manage bookings</Link>
             }
             { currentUser === null ?
                 <div>

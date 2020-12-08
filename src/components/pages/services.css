@@ -1,0 +1,33 @@
+.services-container {
+
+}
+.services-container_header {
+    font-size: 20px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.services-list {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.service {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.service__item {
+    margin-left: 30px;
+}
+
+.service__btn {
+    margin-right: 20px;
+    margin-left: auto;
+}

@@ -34,8 +34,9 @@ export const DeskClearManageBookings = () => {
     const history = useHistory();
     const [currentUser, setCurrentUser] = useState(authenticationService.currentUserValue);
 
-    if (currentUser.role){
-
+    if (currentUser.role.name !== 'Desk_clerk'){
+        history.push('/');
+        return null;
     }
 
 
@@ -59,8 +60,6 @@ export const DeskClearManageBookings = () => {
     const onChangeStartDate = (e) => {
         if (e.target.value > endDate){
             setStartDate(endDate);
-        } else if (e.target.value < todayString){
-            setStartDate(todayString)
         } else {
             setStartDate(e.target.value);
         }
@@ -91,19 +90,6 @@ export const DeskClearManageBookings = () => {
 
 
 
-
-    const book = (roomId, userId, startDate, endDate) => {
-        axios.post(API_URL_GET_BOOK+'room', {
-            room: roomId,
-            userId: userId,
-            fromDate: Date.parse(startDate),
-            toDate: Date.parse(endDate)
-        }).then(()=>{
-            alert('you successfully booked the room');
-            history.push('/profile');
-        })
-    }
-
     useEffect(() => {
         setCurrentUser(authenticationService.currentUserValue)
         axios.get(API_URL_GET_ROOMS)
@@ -130,28 +116,41 @@ export const DeskClearManageBookings = () => {
             // history.push('/profile');
         })
     };
-
+    if (isCreate){
+        return (
+            <div className='update-booking-modal'>
+                <BookingCreate cancel={() => setIsCreate(false)}/>
+            </div>
+        )
+    } else if (selectedBooking !== null){
+        return (
+            <div className='update-booking-modal'>
+                <BookingUpdate booking = {selectedBooking} bookings = {bookings} rooms={rooms} cancel={()=>setSelectedBooking(null)}/>
+            </div>
+        )
+    }
     return (
         <div className='desk-clerk-manage-bookings'>
-            {
-                isCreate &&
-                <div className='update-booking-modal'>
-                    <BookingCreate cancel={() => setIsCreate(false)}/>
-                </div>
-            }
-            {
-                selectedBooking !== null &&
-                <div className='update-booking-modal'>
-                    <BookingUpdate booking = {selectedBooking} bookings = {bookings} rooms={rooms} cancel={()=>setSelectedBooking(null)}/>
-                </div>
-            }
-            <Button  variant="contained"
-                     color="primary"
-                     className='desk-clerk-manage-bookings_create-booking'
-                     onClick={() => setIsCreate(true)}
-            >
-                Create new booking
-            </Button>
+            {/*{*/}
+            {/*    isCreate &&*/}
+            {/*    <div className='update-booking-modal'>*/}
+            {/*        <BookingCreate cancel={() => setIsCreate(false)}/>*/}
+            {/*    </div>*/}
+            {/*}*/}
+            {/*{*/}
+            {/*    selectedBooking !== null &&*/}
+            {/*    <div className='update-booking-modal'>*/}
+            {/*        <BookingUpdate booking = {selectedBooking} bookings = {bookings} rooms={rooms} cancel={()=>setSelectedBooking(null)}/>*/}
+            {/*    </div>*/}
+            {/*}*/}
+            <div className='desk-clerk-manage-bookings_create-booking'>
+                <Button  variant="contained"
+                         color="primary"
+                         onClick={() => setIsCreate(true)}
+                >
+                    Create new booking
+                </Button>
+            </div>
             <div className='desk-clerk-manage-bookings_search-rooms'>
                 <div>
                     <label for="startDate">start date:</label>
@@ -223,20 +222,24 @@ export const DeskClearManageBookings = () => {
                             <div className='booking-list_element_info'>Hotel name: {booking.room.roomType.hotel.name} </div>
                             <div className='booking-list_element_info'>capacity: {booking.room.roomType.capacity} </div>
                             <div className='booking-list_element_info'>location: {booking.room.destination} </div>
-                            <Button  variant="contained"
-                                     color="secondary"
-                                     className='booking-list_element_btn'
-                                     onClick={() => deleteBooking(booking.id)}
-                            >
-                                Delete booking
-                            </Button>
-                            <Button  variant="contained"
-                                     color="primary"
-                                     className='booking-list_element_btn'
-                                     onClick={() => setSelectedBooking(booking)}
-                            >
-                                Update booking
-                            </Button>
+                            <div className='booking-list_element_btn'>
+                                <Button  variant="contained"
+                                         color="secondary"
+                                         className='booking-list_element_btn'
+                                         onClick={() => deleteBooking(booking.id)}
+                                >
+                                    Delete booking
+                                </Button>
+                            </div>
+                            <div className='booking-list_element_btn'>
+                                <Button  variant="contained"
+                                         color="primary"
+                                         className='booking-list_element_btn'
+                                         onClick={() => setSelectedBooking(booking)}
+                                >
+                                    Update booking
+                                </Button>
+                            </div>
                         </div>
                     )
                 })}

@@ -20,7 +20,7 @@ export const Profile = () => {
 
     useEffect(() => {
         axios.get(API_URL2).then((res) => {
-            // console.log(res.data);
+            console.log(res.data);
             setBookings(res.data);
         })
     }, []);
@@ -45,30 +45,47 @@ export const Profile = () => {
             <h3 className='profile-container_info'>email: {currentUser.email}</h3>
             <h3 className='profile-container_info'>role: {currentUser.role.name}</h3>
             {/*<h3 className='profile-container_info'>accessToken: {currentUser.accessToken}</h3>*/}
-            <div className='booking-list'>
-                <h1 className='booking-list_header'>Your bookings</h1>
-                {bookings.map((booking) => {
-                    if (booking.user.id === currentUser.id){
-                        return <div className='booking-list_element'>
-                            <div className='booking-list_element_info'>id: {booking.id} </div>
-                            <div className='booking-list_element_info'>from: {booking.fromDate} </div>
-                            <div className='booking-list_element_info'>to: {booking.toDate} </div>
-                            <div className='booking-list_element_info'>Hotel name: {booking.room.roomType.hotel.name}</div>
-                            <div className='booking-list_element_info'>Hotel address: {booking.room.roomType.hotel.address}</div>
-                            {
-                                todayString <= booking.fromDate &&
-                                <Button  variant="contained"
-                                         color="primary"
-                                         className='booking-list_element_btn'
-                                         onClick={() => deleteBooking(booking.id)}
-                                >
-                                    Cancel
-                                </Button>
-                            }
-                        </div>
-                    }
-                })}
-            </div>
+            {
+                currentUser.role.name === 'User' &&
+                <div className='booking-list'>
+                    <h1 className='booking-list_header'>Your bookings</h1>
+                    {bookings.map((booking) => {
+                        if (booking.user.id === currentUser.id){
+                            return <div className='booking-list_element'>
+                                <div className='booking-list_element_info'>id: {booking.id} </div>
+                                <div className='booking-list_element_info'>from: {booking.fromDate} </div>
+                                <div className='booking-list_element_info'>to: {booking.toDate} </div>
+                                <div className='booking-list_element_info'>Hotel name: {booking.room.roomType.hotel.name}</div>
+                                <div className='booking-list_element_info'>Hotel address: {booking.room.roomType.hotel.address}</div>
+                                <div className='booking-list_element_info'>Bill: {booking.bill}</div>
+                                <div>
+                                    Services: {
+                                        booking.services && booking.services.map((service)=>{
+                                            return `${service.name} `
+                                        })}
+                                </div>
+                                {
+                                    todayString <= booking.fromDate ?
+                                    <Button  variant="contained"
+                                             color="primary"
+                                             className='booking-list_element_btn'
+                                             onClick={() => deleteBooking(booking.id)}
+                                    >
+                                        Cancel
+                                    </Button>
+                                        :
+                                    <Button  variant="contained"
+                                             color="red"
+                                             className='booking-list_element_btn'
+                                    >
+                                        Old booking
+                                    </Button>
+                                }
+                            </div>
+                        }
+                    })}
+                </div>
+            }
         </div>
     )
 }

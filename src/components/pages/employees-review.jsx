@@ -3,9 +3,17 @@ import axios from "axios";
 import {Button} from "@material-ui/core";
 import {UpdateEmployee} from "../emploee/updateEmployee";
 import './employees-review.css';
-
+import {authenticationService} from "../../services/auth.service";
+import { useHistory } from 'react-router-dom';
 
 export const EmployeesReview = () => {
+    const history = useHistory();
+    const [currentUser, setCurrentUser] = useState(authenticationService.currentUserValue);
+
+    if (currentUser.role.name !== 'Manager'){
+        history.push('/');
+        return null;
+    }
 
     const [employees, setEmployees] = useState([]);
     const [updateEmployee, setUpdateEmployee] = useState(null);
@@ -36,13 +44,14 @@ export const EmployeesReview = () => {
                         <div className='employees-list-element_part'>Hours: {employee.hours}</div>
                         <div className='employees-list-element_part'>Salary: {employee.salary}</div>
                         {<div className='employees-list-element_part'>Supervisor: {employee.supervisor ? employee.supervisor.name: 'No supervisor'}</div>}
-                        <Button  variant="contained"
-                                 color="primary"
-                                 className='employees-list-element_btn'
-                                 onClick={() => setUpdateEmployee(employee)}
-                        >
-                            update
-                        </Button>
+                        <div  className='employees-list-element_btn'>
+                            <Button  variant="contained"
+                                     color="primary"
+                                     onClick={() => setUpdateEmployee(employee)}
+                            >
+                                update
+                            </Button>
+                        </div>
                     </div>
                 })
             }

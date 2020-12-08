@@ -15,6 +15,8 @@ import {DeskClearManageBookings} from "./components/pages/desk-clerk-manage-book
 import {EmployeesReview} from "./components/pages/employees-review";
 import {Seasons} from "./components/pages/seasons";
 import {Notification} from "./components/pages/notification";
+import {Services} from "./components/pages/services";
+import {CreateService} from "./components/pages/create-service";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -33,6 +35,8 @@ ReactDOM.render(
                 <Route exact path='/register'>
                     <Register/>
                 </Route>
+                <PrivateRoute exact path='/createService' component={CreateService}/>
+                <PrivateRoute exact path='/services' component={Services}/>
                 <PrivateRoute exact path='/profile' component={Profile}/>
                 <PrivateRoute exact path='/booking' component={SearchAvailableRooms}/>
                 <PrivateRoute exact path='/deskclerk' component={DeskClearManageBookings}/>

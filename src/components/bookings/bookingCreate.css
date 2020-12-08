@@ -56,7 +56,7 @@
 
 
 .booking-list {
-    width: 50%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,7 +67,7 @@
 
 .booking-list .booking-list_element {
     width: 100%;
-    height: 60px;
+    height: 50px;
     border: 1px solid black;
     border-radius: 7px;
     margin-bottom: 10px;
@@ -87,6 +87,9 @@
 }
 
 .booking-list .booking-list_element .booking-list_element_btn {
-    width: 150px;
     margin-right: 10px;
+}
+
+.booking-create-guestInput {
+
 }

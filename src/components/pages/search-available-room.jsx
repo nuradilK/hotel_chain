@@ -43,6 +43,12 @@ export const SearchAvailableRooms = () => {
     const [rooms, setRooms] = useState([]);
 
     const history = useHistory();
+
+    if (currentUser.role.name !== 'User'){
+        history.push('/');
+        return null;
+    }
+
     const occupancyList = occupancyTypes.map((occup) => {
         return  <MenuItem value={occup} key={occup}>{occup}</MenuItem>
     })
@@ -101,6 +107,94 @@ export const SearchAvailableRooms = () => {
             setBookings(res.data);
         })
     },[]);
+
+    const calculateBill = (room) => {
+        let price = 0;
+        const startDate = new Date(Date.parse(startDate));
+        const endDate = new Date(Date.parse(endDate));
+        let weekDay = startDate.getDay();
+        console.log(weekDay);
+        let Difference_In_Time = endDate.getTime() - startDate.getTime();
+        let Difference_In_Days = (Difference_In_Time / (1000 * 3600 * 24) )+ 1;
+        console.log(Difference_In_Days);
+        while(Difference_In_Days--){
+            if (weekDay === 0){
+                weekDay++;
+                let cof = 1;
+                room.roomType.hotel.seasons.forEach((season) => {
+                    if (Date.parse(season.startDate) <= startDate && Date.parse(season.endDate) >= startDate){
+                        cof += (season.coefficient - 1);
+                    }
+                })
+                price += room.roomType.price_Sn * cof;
+                startDate.setDate(startDate.getDate() + 1);
+            } else if (weekDay === 1){
+                weekDay++;
+                let cof = 1;
+                room.roomType.hotel.seasons.forEach((season) => {
+                    if (Date.parse(season.startDate) <= startDate && Date.parse(season.endDate) >= startDate){
+                        cof += (season.coefficient - 1);
+                    }
+                })
+                price += room.roomType.price_M * cof;
+                startDate.setDate(startDate.getDate() + 1);
+            } else if (weekDay === 2){
+                weekDay++;
+                let cof = 1;
+                room.roomType.hotel.seasons.forEach((season) => {
+                    if (Date.parse(season.startDate) <= startDate && Date.parse(season.endDate) >= startDate){
+                        cof += (season.coefficient - 1);
+                    }
+                });
+                price += room.roomType.price_T * cof;
+                startDate.setDate(startDate.getDate() + 1);
+
+            } else if (weekDay === 3){
+                weekDay++;
+                let cof = 1;
+                room.roomType.hotel.seasons.forEach((season) => {
+                    if (Date.parse(season.startDate) <= startDate && Date.parse(season.endDate) >= startDate){
+                        cof += (season.coefficient - 1);
+                    }
+                });
+                price += room.roomType.price_W * cof;
+                startDate.setDate(startDate.getDate() + 1);
+            } else if (weekDay === 4){
+                weekDay++;
+                let cof = 1;
+                room.roomType.hotel.seasons.forEach((season) => {
+                    if (Date.parse(season.startDate) <= startDate && Date.parse(season.endDate) >= startDate){
+                        cof += (season.coefficient - 1);
+                    }
+                });
+                price += room.roomType.price_R * cof;
+                startDate.setDate(startDate.getDate() + 1);
+            } else if (weekDay === 5){
+                weekDay++;
+                let cof = 1;
+                room.roomType.hotel.seasons.forEach((season) => {
+                    if (Date.parse(season.startDate) <= startDate && Date.parse(season.endDate) >= startDate){
+                        cof += (season.coefficient - 1);
+                    }
+                });
+                price += room.roomType.price_F * cof;
+                startDate.setDate(startDate.getDate() + 1);
+            } else if (weekDay === 6){
+                price += room.roomType.price_St;
+                weekDay=0;
+                let cof = 1;
+                room.roomType.hotel.seasons.forEach((season) => {
+                    if (Date.parse(season.startDate) <= startDate && Date.parse(season.endDate) >= startDate){
+                        cof += (season.coefficient - 1);
+                    }
+                });
+                price += room.roomType.price_St * cof;
+                startDate.setDate(startDate.getDate() + 1);
+            }
+
+        }
+        return price;
+    }
 
     return (
         <div className='search-container'>
@@ -161,6 +255,7 @@ export const SearchAvailableRooms = () => {
                         }
                         return room.roomType.hotel.address === destination;
                     }).map(room => {
+                        const bill = calculateBill(room);
                         return (
                             <div className='booking-list_element'>
                                 <div className='booking-list_element_info'>hotel name: {room.roomType.hotel.name} </div>
@@ -168,6 +263,7 @@ export const SearchAvailableRooms = () => {
                                 <div className='booking-list_element_info'>number: {room.number} </div>
                                 <div className='booking-list_element_info'>capacity: {room.roomType.capacity} </div>
                                 <div className='booking-list_element_info'>location: {room.destination} </div>
+                                {/*<div className='booking-list_element_info'>bill: {bill} </div>*/}
                                 <Button  variant="contained"
                                          color="primary"
                                          className='booking-list_element_btn'

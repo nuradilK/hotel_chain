@@ -102,14 +102,16 @@ export const BookingCreate = (props) => {
 
     return (
         <div className='search-container'>
-            <Button  variant="contained"
+            <Button
+                style={{marginTop: '20px'}}
+                variant="contained"
                      color="primary"
                      className='booking-list_element_btn'
                      onClick={cancel}
             >
                 X
             </Button>
-            <div className='search-rooms'>
+            <div className='search-rooms' style={{width: '75%'}}>
                 <div>
                     <label for="startDate">start date:</label>
                     <input id="startDate" type='date' value={startDate} onChange={onChangeStartDate}/>
@@ -129,10 +131,19 @@ export const BookingCreate = (props) => {
                         {occupancyList.map((occup) => occup)}
                     </Select>
                 </div>
-                <div>
-                    <label htmlFor="guestId">quest ID:</label>
-                    <input id="guestId" value={guestId} onChange={onChangeGuestId}/>
+
+                <div className='booking-create-guestInput'>
+                    <TextField
+                        style={{width: '100%'}}
+                        id='hotelName'
+                        label='Guest ID'
+                        placeholder='Guest ID'
+                        variant='outlined'
+                        value={guestId}
+                        onChange={onChangeGuestId}
+                    />
                 </div>
+
                 <div>
                     <InputLabel id="demo-simple-select-label">Destination</InputLabel>
                     <Select
@@ -177,17 +188,18 @@ export const BookingCreate = (props) => {
                             <div className='booking-list_element_info'>number: {room.number} </div>
                             <div className='booking-list_element_info'>capacity: {room.roomType.capacity} </div>
                             <div className='booking-list_element_info'>location: {room.destination} </div>
-                            <Button  variant="contained"
-                                     color="primary"
-                                     className='booking-list_element_btn'
-                                     onClick={() => {
-                                         const confirmBooking = confirm("Do you want to book this room?");
-                                         if (confirmBooking){
-                                             book(room.id, parseInt(guestId), startDate, endDate)
-                                         }
-                                     }}>
-                                book room
-                            </Button>
+                            <div className='booking-list_element_btn'>
+                                <Button  variant="contained"
+                                         color="primary"
+                                         onClick={() => {
+                                             const confirmBooking = confirm("Do you want to book this room?");
+                                             if (confirmBooking){
+                                                 book(room.id, parseInt(guestId), startDate, endDate)
+                                             }
+                                         }}>
+                                    book room
+                                </Button>
+                            </div>
                         </div>
                     )
                 })}

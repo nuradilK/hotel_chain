@@ -3,10 +3,11 @@ import {Button, TextField} from "@material-ui/core";
 import axios from "axios";
 import './updateEmployee.css';
 import {authenticationService} from "../../services/auth.service";
+import {useHistory} from 'react-router-dom';
 
 export const UpdateEmployee = (props) => {
     const { employee, cancel} = props;
-
+    const history = useHistory();
     const [hours, setHours] = useState(employee.hours);
     const [salary, setSalary] = useState(employee.salary);
     const [position, setPosition] = useState(employee.position);
@@ -38,13 +39,14 @@ export const UpdateEmployee = (props) => {
             employeePosition: position
         }).then(()=>{
             alert('you successfully updated employee info');
-            cancel();
+            // cancel();
+            history.go(0);
         })
     };
 
     //TODO: make check types for inputs
-    return <div className='update-employee'>
-        <div className='cancel' onClick={cancel}>X</div>
+    return <div className='update-employee-container'>
+        <div className='update-employee_cancel' onClick={cancel}>X</div>
         <div className='update-employee_header'>Update employee</div>
         <div className='update-employee_input'>
             <TextField
@@ -80,13 +82,15 @@ export const UpdateEmployee = (props) => {
                 onChange={onChangePosition}
             />
         </div>
-
-        <Button  variant="contained"
-                 color="primary"
-                 className='update'
-                 onClick={update}
-        >
-            update
-        </Button>
+        <div className='update'>
+            <Button
+                style={{width: '100%'}}
+                variant="contained"
+                     color="primary"
+                     onClick={update}
+            >
+                update
+            </Button>
+        </div>
     </div>
 }

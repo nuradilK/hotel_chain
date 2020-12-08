@@ -5,12 +5,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import axios from "axios";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import Select from "@material-ui/core/Select/Select";
-
+import './bookingCreate.css'
 const API_URL_GET_ROOMS = "http://localhost:8080/api/rooms/";
 const API_URL_GET_BOOK = "http://localhost:8080/api/book/";
 import {useHistory} from 'react-router-dom';
 
-import './bookingCreate.css';
 
 const occupancyTypes = [
     'see all',1,2,3,4,5,6,7,8,9,10
@@ -81,7 +80,9 @@ export const BookingUpdate = (props) => {
 
     return (
         <div className='search-container'>
-            <Button  variant="contained"
+            <Button
+                style={{marginTop: '20px'}}
+                variant="contained"
                      color="primary"
                      className='booking-list_element_btn'
                      onClick={cancel}
@@ -152,14 +153,15 @@ export const BookingUpdate = (props) => {
                             <div className='booking-list_element_info'>number: {room.number} </div>
                             <div className='booking-list_element_info'>capacity: {room.roomType.capacity} </div>
                             <div className='booking-list_element_info'>location: {room.destination} </div>
-                            <Button  variant="contained"
-                                     color="primary"
-                                     className='booking-list_element_btn'
-                                     onClick={() => {
-                                         updateBook(booking.id, room.id, startDate, endDate);
-                                     }}>
-                                update book with this room
-                            </Button>
+                            <div className='booking-list_element_btn'>
+                                <Button  variant="contained"
+                                         color="primary"
+                                         onClick={() => {
+                                             updateBook(booking.id, room.id, startDate, endDate);
+                                         }}>
+                                    update book with this room
+                                </Button>
+                            </div>
                         </div>
                     )
                 })}
