@@ -4,7 +4,7 @@ In this project, for a database systems course we were required to design a data
 
 First, an ER Model was designed for our database (Fig. 1).
 
-![Fig. 1](https://github.com/nuradilK/hotel_chain/blob/main/Final ER Model.png?raw=true)
+![Fig. 1](https://github.com/nuradilK/hotel_chain/blob/main/Final%20ER%20Model.png?raw=true)
 
 There are many hotels in the chain. Hotels have seasons. Some of them may share seasons (for example, same season in one country), while others may have unique ones. Many-to-many relationships were used to identify this relationship.
 Hotels have employees at different positions, some of them supervise others.
@@ -136,3 +136,131 @@ return​​total_bill * season_coef * category_coef
 
 > ● Guest Jon Smith is already registered in the system, so he was able to reserve a room of type ‘double’ at hotel B beforehand. In our system the user selects a certain room based on his preferences, so the room is already marked to be booked. However, if the guest won’t like the room on the day of arrival, the desk clerk will offer the available rooms of the same type both unoccupied and clean instead. We can sort the rooms out by checking the values of ‘cleaned’ and ‘guested’ fields.
 
+```
+select
+R.id
+            
+from
+roomtypes RT
+​join rooms R
+​on​RT.roomtypeid = R.roomtypeid
+​and​RT.hotelid = ​2 where
+RT.type = ​'double' ​and​R.guested = ​0 ​and​R.cleaned = ​1 ​and​R.id ​not in
+(
+​select B.roomid
+​from
+books B
+​where
+R.id = B.roomid ​and
+(
+B.from_date ​between​​'2020-12-26'​​and​​'2020-12-28' ​or​B.to_date ​between​​'2020-12-26'​​and​​'2020-12-28' ​or​(B.from_date <= ​'2020-12-26'​​and​B.to_date >= ​'2020-12-28'​)
+        ) );
+```
+
+> ● The Jon Smith booking insert statement:
+
+```
+insert​ ​into
+​`hotel_chain`​.​`books`​(​`bill`​, ​`from_date`​, ​`to_date`​, ​`roomid`​, ​`userid`​,
+​`num_of_guests`​) values
+(​'42500'​, ​'2020-12-26'​, ​'2020-12-28'​, ​'10'​, ​'2'​, ​'2'​);
+The information about the guests to be filled by desk clerk:
+insert into
+`hotel_chain`​.​`guest`​(​`id`​,​`first_name`​, ​`last_name`​, ​`address`​, ​`id_type`​,
+`id_number`​, ​`mobile_phohe_number`​, ​`home_phone_number`​, ​`books_id`​) values
+(​'2'​, ​'Jon'​, ​'Smith'​, ​'Nur-Sultan'​, ​'passport'​, ​'111111111'​, ​'+7 777 7777'​, ​'999999'​, ​'4'​);
+    
+insert into
+`hotel_chain`​.​`guest`​(​`id`​,​`first_name`​, ​`last_name`​, ​`address`​, ​`id_type`​,
+`id_number`​, ​`mobile_phohe_number`​, ​`home_phone_number`​, ​`books_id`​) values
+(​'3'​, ​'Joanna'​, ​'Smith'​, ​'Nur-Sultan'​, ​'passport'​, ​'222222222'​, ​'+7 777 1122'​, ​'999999'​, ​'4'​);
+```
+
+**Question-3.**
+
+> ● Firstly, we select required fields which are First name, Last name, address and phone number. All of this information is stored in the “guest” table. Since we cannot directly take the room number and booking dates we made inner joins with “books” and “room” tables. After completing the join we filtered out from date, to date and room number and get access to guest information we needed.
+
+```
+select
+   guest.first_name, guest.last_name, guest.address, guest.mobile_phohe_number
+from
+​guest ​inner​ ​join
+books
+​on​books.id = guest.books_id ​inner​ ​join
+rooms
+​on​books.roomid = rooms.id ​and​books.from_date <= ​'2020-10-15' ​and​books.to_date >= ​'2020-10-15' ​and​rooms.number = ​311​;
+```
+
+**Question-4.**
+
+> ● All hotels from our hotel chain have the same services because every service is a special feature of the hotel chain. So, every hotel must have the same services. Every guest after booking can register services he/she need. For example, after booking room 12 in hotel Astana, the guest can also register such services as SPA, gym, pool to his/her booking (The price of services will be added to the bill). The services are stored as an independent table in the database, since every hotel must have all services available. The service is connected to the booking by “books_has_services” table.
+   
+> ● As was written before, after booking every guest can register any service he/she want. This is done with the help of “books_has_services” table. The “books_has_services” table will store the booking ID and service ID to connect them. After the quest registered the service to his booking, the price of the service will be automatically added to the bill of booking. Regarding queries, there are two simple insert queries where in the “bookid” and “serviceid” attributes of “books_has_services” table we insert the ID of the booking
+to which we want to register the service and service ID respectively.
+
+```
+insert​ ​into
+hotel_chain.books_has_services (bookid, serviceid)
+values
+(​1​, ​1​);
+insert​ ​into
+hotel_chain.books_has_services (bookid, serviceid)
+values
+(​1​, ​2​);
+```
+
+After each insert statement bill is updated:
+
+`book.​setBill​(book.​getBill()​+ service.​getPrice()​); ​// pseudocode`
+
+> ● Whenever service is used, the bill of the booking is updated, so selecting bill of the booking is enough
+
+```
+select
+bill
+from
+books
+where
+books.id = ​1
+```
+
+**Question-5.**
+
+> ● “Find all guests who have spent over $1000 (at the hotel chain) since January 1, 2020, and if
+their current guest category is ‘Bronze”, change it to ‘Silver’.”:
+
+```
+update ​users
+   
+ set
+   user_categoryId =
+   (
+​select user_categoryid
+​from
+user_categories U
+​where
+U.name = ​'silver'
+)
+where users.id ​in
+(
+​select T.id
+​from (
+​select U.id,
+​sum​(bill) ​as​total_bill ​from
+(
+​`hotel_chain`​.​`books`​B ​join
+​`hotel_chain`​.​`users`​U
+​on​B.userid = U.id )
+​join
+​`hotel_chain`​.​`user_categories`​UC ​on​U.user_categoryid = UC.user_categoryid
+​where
+UC.name = ​'bronze' ​and​B.from_date > ​'2020-01-01'
+​group​ ​by U.id
+)
+​as​T ​where
+         T.total_bill > 1000
+   )
+;
+```
+  
+> ● In this query, we first of all find out every ‘bronze’ users’ total sum of bookings by joining tables, books, users, and user_categories. To filter in ‘bronze’ users, we make a where statement to get only ‘bronze’ users, and group by their user id in order to get their total sum of bookings. So, in the end the joint table will have only 2 columns which are user_id, and total_bill. We have to name the joint table in order to be able to work with it afterwards, thus we name it as T. Having the table T, it is easy to find user ids who’s total bill is greater than 1000. So, after filtering out the users whose total bill is less than 1000, we have in the table T users who have to be upgraded to ‘silver’. Thereby, we update users who are only in the table T.
